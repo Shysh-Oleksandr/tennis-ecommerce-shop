@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import morgan from "morgan";
 import productRoutes from "./routes/product";
 import categoryRoutes from "./routes/category";
+import orderRoutes from "./routes/order";
 import userRoutes from "./routes/user";
 import { authJwt } from "./middlewares/jwt";
 import { errorHandler } from "./middlewares/error-handler";
@@ -63,6 +64,7 @@ router.use((req, res, next) => {
 router.use(`${api}/products`, productRoutes);
 router.use(`${api}/categories`, categoryRoutes);
 router.use(`${api}/users`, userRoutes);
+router.use(`${api}/orders`, orderRoutes);
 
 /** Error handling */
 router.use((req, res, next) => {

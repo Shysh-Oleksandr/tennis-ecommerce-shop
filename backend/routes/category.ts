@@ -8,6 +8,6 @@ router.get("/query/:authorID", controller.query);
 router.post("/create", controller.create);
 router.patch("/update/:categoryID", controller.update);
 router.delete("/:categoryID", controller.deleteCategory);
-router.get("/", controller.readAll); // /:authorID
+router.get("/", controller.readAll);
 
 export = router;
