@@ -29,7 +29,6 @@ const create = (req: Request, res: Response, next: NextFunction) => {
   logging.info("Attempting to register user...");
 
   let {
-    // uid,
     name,
     email,
     password,
@@ -41,11 +40,9 @@ const create = (req: Request, res: Response, next: NextFunction) => {
     city,
     country,
   } = req.body;
-  // let fire_token = res.locals.fire_token;
 
   const user = new User({
     _id: new mongoose.Types.ObjectId(),
-    // uid,
     name,
     email,
     passwordHash: bcrypt.hashSync(password, 10),
@@ -64,7 +61,6 @@ const create = (req: Request, res: Response, next: NextFunction) => {
       logging.info(`New user ${name} created...`);
       return res.status(201).json({
         user: newUser,
-        // , fire_token
       });
     })
     .catch((error) => {
@@ -108,7 +104,6 @@ const login = (req: Request, res: Response, next: NextFunction) => {
   logging.info("Loggin in user...");
 
   let { email, password } = req.body;
-  // let fire_token = res.locals.fire_token;
 
   return User.findOne({ email })
     .then((user) => {
@@ -126,8 +121,10 @@ const login = (req: Request, res: Response, next: NextFunction) => {
           const token = jwt.sign(
             {
               userId: user._id,
+              isAdmin: user.isAdmin,
             },
-            config.jwt_secret
+            config.jwt_secret,
+            { expiresIn: "30d" }
           );
 
           return res.status(200).json({
@@ -145,8 +142,6 @@ const login = (req: Request, res: Response, next: NextFunction) => {
         return res.status(200).json({
           message: "User not found",
         });
-
-        // return create(req, res, next);
       }
     })
     .catch((error) => {

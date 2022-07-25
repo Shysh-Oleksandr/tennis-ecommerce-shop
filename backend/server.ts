@@ -1,24 +1,16 @@
-import express from "express";
+import express, { NextFunction, Request } from "express";
 import logging from "./config/logging";
 import config from "./config/config";
 import mongoose from "mongoose";
 import morgan from "morgan";
-// import firebaseAdmin from "firebase-admin";
-// import serviceAccountJson from "./config/serviceAccountKey.json";
 import productRoutes from "./routes/product";
 import categoryRoutes from "./routes/category";
 import userRoutes from "./routes/user";
+import { authJwt } from "./middlewares/jwt";
+import { errorHandler } from "./middlewares/error-handler";
 
 const router = express();
-
 const api = config.api_url;
-
-// /** Connect to Firebase */
-// let serviceAccount: any = serviceAccountJson;
-
-// firebaseAdmin.initializeApp({
-//   credential: firebaseAdmin.credential.cert(serviceAccount),
-// });
 
 /** Connect to Mongo */
 mongoose
@@ -49,6 +41,7 @@ router.use((req, res: any, next) => {
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 router.use(morgan("tiny"));
+router.use(authJwt());
 
 /** Rules of our API */
 router.use((req, res, next) => {
@@ -67,7 +60,6 @@ router.use((req, res, next) => {
 });
 
 /** Routes */
-// router.use("/users", userRoutes);
 router.use(`${api}/products`, productRoutes);
 router.use(`${api}/categories`, categoryRoutes);
 router.use(`${api}/users`, userRoutes);
@@ -80,6 +72,7 @@ router.use((req, res, next) => {
     message: error.message,
   });
 });
+router.use(errorHandler);
 
 /** Listen */
 router.listen(config.server.port, () =>
