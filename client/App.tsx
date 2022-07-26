@@ -1,10 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import ProductContainer from "./src/Screens/Products/ProductContainer";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+      <ProductContainer />
       <StatusBar style="auto" />
     </View>
   );
@@ -13,8 +14,10 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "gainsboro",
+    paddingBottom: 20,
+    paddingTop: 30,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

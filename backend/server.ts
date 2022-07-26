@@ -9,6 +9,7 @@ import categoryRoutes from "./routes/category";
 import orderRoutes from "./routes/order";
 import productRoutes from "./routes/product";
 import userRoutes from "./routes/user";
+import cors from "cors";
 
 const router = express();
 const api = config.api_url;
@@ -45,7 +46,6 @@ router.use(morgan("tiny"));
 router.use(authJwt());
 router.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 router.use(errorHandler);
-
 /** Rules of our API */
 router.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -61,12 +61,17 @@ router.use((req, res, next) => {
 
   next();
 });
+router.use(cors({ origin: true, credentials: true }));
 
 /** Routes */
 router.use(`${api}/products`, productRoutes);
 router.use(`${api}/categories`, categoryRoutes);
 router.use(`${api}/users`, userRoutes);
 router.use(`${api}/orders`, orderRoutes);
+
+router.get("/hello", (req, res) => {
+  res.send("Hello World");
+});
 
 /** Error handling */
 router.use((req, res, next) => {
