@@ -98,6 +98,9 @@ const getTotalSales = async (
 
 const read = (req: Request, res: Response, next: NextFunction) => {
   const _id = req.params.orderID;
+  if (!mongoose.isValidObjectId(_id)) {
+    return res.status(400).send("Invalid Order Id");
+  }
 
   logging.info(`Incoming read for ${_id} ...`);
 
@@ -167,6 +170,9 @@ const query = (req: Request, res: Response, next: NextFunction) => {
 
 const update = (req: Request, res: Response, next: NextFunction) => {
   const _id = req.params.orderID;
+  if (!mongoose.isValidObjectId(_id)) {
+    return res.status(400).send("Invalid Order Id");
+  }
 
   logging.info(`Incoming update for ${_id} ...`);
 
@@ -198,6 +204,9 @@ const update = (req: Request, res: Response, next: NextFunction) => {
 
 const deleteOrder = async (req: Request, res: Response, next: NextFunction) => {
   const _id = req.params.orderID;
+  if (!mongoose.isValidObjectId(_id)) {
+    return res.status(400).send("Invalid Order Id");
+  }
 
   logging.info(`Incoming delete for ${_id} ...`);
 
@@ -218,6 +227,33 @@ const deleteOrder = async (req: Request, res: Response, next: NextFunction) => {
     });
 };
 
+const readUserOrders = (req: Request, res: Response, next: NextFunction) => {
+  const _id = req.params.userID;
+  if (!mongoose.isValidObjectId(_id)) {
+    return res.status(400).send("Invalid Order Id");
+  }
+
+  logging.info(`Incoming read all users orders...`);
+
+  return Order.find({ user: _id })
+    .populate({
+      path: "orderItems",
+      populate: { path: "product", populate: "category" },
+    })
+    .sort({ dateOrdered: -1 })
+    .exec()
+    .then((orders) => {
+      return res.status(200).json({
+        count: orders.length,
+        orders,
+      });
+    })
+    .catch((error) => {
+      logging.error(error);
+      return res.status(500).json({ error });
+    });
+};
+
 export default {
   create,
   read,
@@ -226,4 +262,5 @@ export default {
   update,
   deleteOrder,
   getTotalSales,
+  readUserOrders,
 };
