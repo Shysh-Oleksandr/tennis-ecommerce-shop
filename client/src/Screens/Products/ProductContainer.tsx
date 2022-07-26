@@ -1,9 +1,11 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "../../constants";
 import IProduct from "../../interfaces/product";
 import ProductList from "./ProductList";
+import { Input } from "native-base";
+import { Icon } from "native-base";
 
 type Props = {};
 
@@ -36,7 +38,10 @@ const ProductContainer = (props: Props) => {
   return (
     <View>
       <View>
-        <Text>ProductContainfer</Text>
+        <Icon name="md-search" />
+        <Input placeholder="Search" />
+      </View>
+      <View>
         <FlatList
           columnWrapperStyle={{ justifyContent: "space-between" }}
           style={{ flexDirection: "column", flexWrap: "wrap" }}
