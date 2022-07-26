@@ -6,11 +6,15 @@ import Product from "../models/product";
 const create = (req: Request, res: Response, next: NextFunction) => {
   logging.info("Attempting to register product...");
 
+  const file = req.file;
+  if (!file) return res.status(400).send("No image in the request");
+  const fileName = req.file?.filename;
+  const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
+
   let {
     name,
     description,
     richDescription,
-    image,
     brand,
     price,
     category,
@@ -25,7 +29,7 @@ const create = (req: Request, res: Response, next: NextFunction) => {
     name,
     description,
     richDescription,
-    image,
+    image: `${basePath}${fileName}` || "",
     brand,
     price,
     category,
@@ -137,6 +141,52 @@ const update = (req: Request, res: Response, next: NextFunction) => {
     });
 };
 
+const updateImages = (req: Request, res: Response, next: NextFunction) => {
+  const _id = req.params.productID;
+  logging.info(`Incoming update for ${_id} ...`);
+
+  if (!mongoose.isValidObjectId(_id)) {
+    return res.status(400).send("Invalid Product Id");
+  }
+
+  const files: any = req.files;
+  let imagesPaths: string[] = [];
+  const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
+
+  if (files) {
+    files.map((file: any) => {
+      imagesPaths.push(`${basePath}${file.filename}`);
+    });
+  }
+
+  return Product.findById(_id)
+    .exec()
+    .then((product) => {
+      if (product) {
+        product.set({
+          images: imagesPaths,
+        });
+
+        product
+          .save()
+          .then((newProduct) => {
+            logging.info(`Product updated...`);
+            return res.status(201).json({ product: newProduct });
+          })
+          .catch((error) => {
+            logging.error(error);
+            return res.status(500).json({ error });
+          });
+      } else {
+        return res.status(404).json({ message: "product not found" });
+      }
+    })
+    .catch((error) => {
+      logging.error(error);
+      return res.status(500).json({ error });
+    });
+};
+
 const deleteProduct = (req: Request, res: Response, next: NextFunction) => {
   const _id = req.params.productID;
 
@@ -159,4 +209,5 @@ export default {
   query,
   update,
   deleteProduct,
+  updateImages,
 };

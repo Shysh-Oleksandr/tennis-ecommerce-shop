@@ -1,14 +1,14 @@
-import express, { NextFunction, Request } from "express";
-import logging from "./config/logging";
-import config from "./config/config";
+import express from "express";
 import mongoose from "mongoose";
 import morgan from "morgan";
-import productRoutes from "./routes/product";
+import config from "./config/config";
+import logging from "./config/logging";
+import { errorHandler } from "./middlewares/error-handler";
+import { authJwt } from "./middlewares/jwt";
 import categoryRoutes from "./routes/category";
 import orderRoutes from "./routes/order";
+import productRoutes from "./routes/product";
 import userRoutes from "./routes/user";
-import { authJwt } from "./middlewares/jwt";
-import { errorHandler } from "./middlewares/error-handler";
 
 const router = express();
 const api = config.api_url;
@@ -38,11 +38,13 @@ router.use((req, res: any, next) => {
   next();
 });
 
-/** Parse the body of the request */
+/** Middlewares */
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 router.use(morgan("tiny"));
 router.use(authJwt());
+router.use("/public/uploads", express.static(__dirname + "/public/uploads"));
+router.use(errorHandler);
 
 /** Rules of our API */
 router.use((req, res, next) => {
@@ -74,7 +76,6 @@ router.use((req, res, next) => {
     message: error.message,
   });
 });
-router.use(errorHandler);
 
 /** Listen */
 router.listen(config.server.port, () =>
