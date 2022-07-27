@@ -28,7 +28,7 @@ const Banner = (props: Props) => {
             style={{ height: width / 2 }}
             showsButtons={false}
             autoplay={true}
-            autoplayTimeout={2}
+            autoplayTimeout={5}
           >
             {bannerData.map((item) => {
               return (
@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
   swiper: {
     width: width,
     alignItems: "center",
-    marginTop: 10,
+    marginTop: 5,
   },
   bannerImage: {
-    height: width / 2,
+    height: width / 3,
     width: width - 40,
     borderRadius: 10,
     marginHorizontal: 20,

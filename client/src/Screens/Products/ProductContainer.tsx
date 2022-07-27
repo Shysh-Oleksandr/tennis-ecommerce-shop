@@ -1,44 +1,39 @@
 import axios from "axios";
 import { Input } from "native-base";
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import { API_URL } from "../../constants";
-import IProduct from "../../interfaces/product";
+import { useFetchData } from "../../hooks/fetchData";
 import Banner from "../../shared/Banner";
 import ProductList from "./ProductList";
 import SearchedProducts from "./SearchedProducts";
+import IProduct from "./../../interfaces/product";
+import ICategory from "./../../interfaces/category";
+import CategoryFilter from "./CategoryFilter";
+import SafeAreaView from "react-native-safe-area-view";
 
 type Props = {};
 
 const ProductContainer = (props: Props) => {
-  const [products, setProducts] = useState<IProduct[]>([]);
   const [filteredproducts, setFilteredProducts] = useState<IProduct[]>([]);
+  const [products, setProducts] = useFetchData<IProduct>(
+    "GET",
+    `${API_URL}/products`,
+    "products"
+  );
+  const [categories, setCategories] = useFetchData<ICategory>(
+    "GET",
+    `${API_URL}/categories`,
+    "categories"
+  );
+  const [active, setActive] = useState(-1);
+  const [initialState, setInitialState] = useState(products);
   const [focus, setFocus] = useState(false);
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  async function fetchProducts() {
-    try {
-      const response = await axios({
-        method: "GET",
-        url: `${API_URL}/products`,
-      });
-
-      if (response.status === 200 || response.status === 304) {
-        let products = response.data.products as IProduct[];
-        setProducts(products);
-        setFilteredProducts(products);
-      } else {
-        console.log("Can't get products");
-      }
-    } catch (error) {
-      alert(error);
-      console.log("Catch: " + error);
-    }
-  }
+    setFilteredProducts(products);
+  }, [products]);
 
   const searchProduct = (text: string) => {
     setFilteredProducts(
@@ -53,8 +48,26 @@ const ProductContainer = (props: Props) => {
     setFocus(false);
   };
 
+  const ListHeaderComponent = (
+    <>
+      <View>
+        <Banner />
+      </View>
+      <View>
+        <FlatList
+          style={{ flexDirection: "row" }}
+          data={categories}
+          renderItem={({ item }) => (
+            <CategoryFilter key={item.id} category={item} />
+          )}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
+    </>
+  );
+
   return (
-    <View>
+    <SafeAreaView>
       <View style={styles.searchContainer}>
         <Input
           onChangeText={(text) => searchProduct(text)}
@@ -74,23 +87,17 @@ const ProductContainer = (props: Props) => {
       {focus ? (
         <SearchedProducts filteredProducts={filteredproducts} />
       ) : (
-        <View>
-          <View>
-            <Banner />
-          </View>
-          <FlatList
-            columnWrapperStyle={{ justifyContent: "space-between" }}
-            style={{ flexDirection: "column", flexWrap: "wrap" }}
-            numColumns={2}
-            data={products}
-            renderItem={({ item }) => (
-              <ProductList key={item._id} item={item} />
-            )}
-            keyExtractor={(item) => item._id}
-          />
-        </View>
+        <FlatList
+          ListHeaderComponent={ListHeaderComponent}
+          columnWrapperStyle={{ justifyContent: "space-between" }}
+          style={{ flexDirection: "column" }}
+          numColumns={2}
+          data={products}
+          renderItem={({ item }) => <ProductList key={item._id} item={item} />}
+          keyExtractor={(item) => item._id}
+        />
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

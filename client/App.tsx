@@ -1,9 +1,10 @@
 import { StatusBar } from "expo-status-bar";
+import { NativeBaseProvider } from "native-base";
+import React from "react";
 import { StyleSheet, View } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import ProductContainer from "./src/Screens/Products/ProductContainer";
 import Header from "./src/shared/Header";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { NativeBaseProvider } from "native-base";
 
 export default function App() {
   return (
@@ -23,8 +24,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "gainsboro",
-    paddingBottom: 20,
-    paddingTop: 70,
+    paddingBottom: 10,
+    paddingTop: 10,
     alignItems: "center",
     justifyContent: "center",
   },
