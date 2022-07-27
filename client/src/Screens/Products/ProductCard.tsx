@@ -9,6 +9,7 @@ import {
 import React from "react";
 import IProduct from "../../interfaces/product";
 import { EMULATOR_API } from "../../constants";
+import ProductImage from "./ProductImage";
 
 type Props = {
   item: IProduct;
@@ -19,11 +20,7 @@ const { width } = Dimensions.get("window");
 const ProductCard = ({ item }: Props) => {
   return (
     <View style={styles.container}>
-      <Image
-        resizeMode="contain"
-        style={styles.image}
-        source={{ uri: item.image.replace("localhost", EMULATOR_API) }}
-      />
+      <ProductImage image={item.image} styles={styles.image} />
       <View style={styles.card} />
       <Text style={styles.title}>
         {item.name.length > 15
