@@ -30,7 +30,7 @@ const ProductCard = ({ item }: Props) => {
       <Text style={styles.price}>${item.price}</Text>
 
       {item.countInStock > 0 ? (
-        <View style={{ marginBottom: 60 }}>
+        <View style={{ marginBottom: 40, marginTop: 10 }}>
           <Button title="Add" color="green" />
         </View>
       ) : (
@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
     height: width / 1.7,
     padding: 10,
     borderRadius: 10,
-    marginTop: 35,
-    marginBottom: 5,
+    marginTop: 20,
+    marginBottom: 20,
     marginLeft: 10,
     alignItems: "center",
     elevation: 8,

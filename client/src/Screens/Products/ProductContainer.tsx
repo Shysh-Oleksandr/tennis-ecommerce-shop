@@ -1,8 +1,9 @@
 import { Input } from "native-base";
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import SafeAreaView from "react-native-safe-area-view";
 import Icon from "react-native-vector-icons/AntDesign";
+import tw from "tailwind-react-native-classnames";
 import { API_URL } from "../../constants";
 import { useFetchData } from "../../hooks/useFetchData";
 import Banner from "../../shared/Banner";
@@ -31,6 +32,9 @@ const ProductContainer = (props: Props) => {
   const [initialState, setInitialState] = useState(products);
   const [focus, setFocus] = useState(false);
   const isCategoryChosen: boolean = activeCategory.toLowerCase() === "all";
+  const productsData: IProduct[] = isCategoryChosen
+    ? products
+    : categoryProducts;
 
   useEffect(() => {
     setFilteredProducts(products);
@@ -80,7 +84,7 @@ const ProductContainer = (props: Props) => {
   );
 
   return (
-    <SafeAreaView>
+    <View style={{ flex: 1 }}>
       <View style={styles.searchContainer}>
         <Input
           onChangeText={(text) => searchProduct(text)}
@@ -101,16 +105,22 @@ const ProductContainer = (props: Props) => {
         <SearchedProducts filteredProducts={filteredProducts} />
       ) : (
         <FlatList
+          ListEmptyComponent={
+            <Text style={tw`text-2xl text-center`}>No products found</Text>
+          }
           ListHeaderComponent={ListHeaderComponent}
           columnWrapperStyle={{ justifyContent: "space-between" }}
-          style={{ flexDirection: "column", marginBottom: 35 }}
+          style={{ flexDirection: "column", flex: 1 }}
           numColumns={2}
-          data={isCategoryChosen ? products : categoryProducts}
+          data={productsData}
           renderItem={({ item }) => <ProductList key={item._id} item={item} />}
           keyExtractor={(item) => item._id}
+          contentContainerStyle={{
+            flexGrow: 1,
+          }}
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

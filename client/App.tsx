@@ -5,16 +5,17 @@ import { StyleSheet, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ProductContainer from "./src/Screens/Products/ProductContainer";
 import Header from "./src/shared/Header";
+import SafeAreaView from "react-native-safe-area-view";
 
 export default function App() {
   return (
     <NativeBaseProvider>
       <SafeAreaProvider>
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <Header />
           <ProductContainer />
           <StatusBar style="auto" />
-        </View>
+        </SafeAreaView>
       </SafeAreaProvider>
     </NativeBaseProvider>
   );
@@ -27,6 +28,5 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingTop: 10,
     alignItems: "center",
-    justifyContent: "center",
   },
 });

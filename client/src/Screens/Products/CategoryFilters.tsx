@@ -20,7 +20,7 @@ const CategoryFilters = ({
         horizontal
         style={{
           flexDirection: "row",
-          marginBottom: 20,
+          marginBottom: 35,
           marginTop: -30,
           paddingHorizontal: 10,
           backgroundColor: "#fff",
