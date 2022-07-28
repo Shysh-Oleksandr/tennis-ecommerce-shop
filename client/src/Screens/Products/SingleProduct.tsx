@@ -5,6 +5,7 @@ import IProduct from "../../interfaces/product";
 import ProductImage from "./ProductImage";
 import { useAppDispatch } from "./../../app/hooks";
 import { addToCart } from "../../features/cart/cartSlice";
+import AddProductBtn from "./AddProductBtn";
 
 type Props = {
   route: any;
@@ -34,12 +35,7 @@ const SingleProduct = ({ route }: Props) => {
           </Text>
         </View>
         <View style={tw`mr-4`}>
-          <Button
-            onPress={() => dispatch(addToCart({ quantity: 1, product: item }))}
-            title="Add"
-          >
-            $ {item.price}
-          </Button>
+          <AddProductBtn item={item} />
         </View>
       </View>
     </View>

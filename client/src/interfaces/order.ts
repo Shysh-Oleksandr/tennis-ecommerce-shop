@@ -8,10 +8,10 @@ export default interface IOrder {
   zip: string;
   country: string;
   phone: number;
-  status: string;
+  status?: string;
   totalPrice: number;
   dateCreated: Date;
-  user: IUser;
+  user?: IUser;
   orderItems: IOrderItem[];
   _id: string;
 }

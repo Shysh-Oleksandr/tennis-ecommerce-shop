@@ -3,12 +3,12 @@ import React from "react";
 
 type Props = {};
 
-const Checkout = (props: Props) => {
+const Confirm = (props: Props) => {
   return (
     <View>
-      <Text>Checkout</Text>
+      <Text>Confirm</Text>
     </View>
   );
 };
 
-export default Checkout;
+export default Confirm;

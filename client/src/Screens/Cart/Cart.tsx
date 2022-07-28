@@ -1,23 +1,31 @@
-import { View, Text, Button, ScrollView } from "react-native";
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { Button, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { SwipeListView } from "react-native-swipe-list-view";
+import Icon from "react-native-vector-icons/FontAwesome";
 import tw from "tailwind-react-native-classnames";
-import ProductImage from "../Products/ProductImage";
-import { clearCart } from "../../features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { clearCart, removeFromCart } from "../../features/cart/cartSlice";
+import IOrderItem from "../../interfaces/orderItem";
+import CartItem from "./CartItem";
 
 type Props = {
   navigation: any;
 };
 
-const Cart = (props: Props) => {
-  const { cartItems } = useAppSelector((store) => store.cart);
-  const dispatch = useAppDispatch();
-
+export function getTotalPrice(cartItems: IOrderItem[]): number {
   let total = 0;
 
   cartItems.forEach((item) => {
     return (total += item.product.price);
   });
+  return total;
+}
+
+const Cart = (props: Props) => {
+  const { cartItems } = useAppSelector((store) => store.cart);
+  const dispatch = useAppDispatch();
+
+  const total = getTotalPrice(cartItems);
 
   if (cartItems.length === 0) {
     return (
@@ -35,31 +43,38 @@ const Cart = (props: Props) => {
   return (
     <View style={tw`flex-1 items-center`}>
       <Text style={tw`text-3xl font-bold my-4`}>Cart</Text>
-      <ScrollView style={tw`w-full mb-16`}>
-        {cartItems.map((cartItem, index) => {
+      <View style={tw`w-full mb-16`}>
+        <SwipeListView
+          data={cartItems}
+          renderItem={(item) => <CartItem cartItem={item.item} />}
+          renderHiddenItem={(item) => {
+            return (
+              <View style={tw`flex-1 justify-end flex-row `}>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  style={tw`bg-red-500 justify-center items-end pr-6 h-16 mt-2 w-full`}
+                  onPress={() => dispatch(removeFromCart(item.item))}
+                >
+                  <Icon name="trash" color={"white"} size={30} />
+                </TouchableOpacity>
+              </View>
+            );
+          }}
+          disableRightSwipe={true}
+          keyExtractor={(item) => item.product._id}
+          previewOpenDelay={3000}
+          friction={1000}
+          tension={40}
+          leftOpenValue={75}
+          stopLeftSwipe={75}
+          rightOpenValue={-75}
+        />
+        {/* {cartItems.map((cartItem, index) => {
           return (
-            <View
-              key={cartItem.product._id + index}
-              style={tw`items-center bg-white p-2 rounded-md my-1 shadow-lg justify-between w-full px-4 flex-row`}
-            >
-              <View style={tw`flex-row items-center`}>
-                <ProductImage
-                  image={cartItem.product.image}
-                  styles={tw`w-14 h-14 rounded-full mr-4`}
-                />
-                <Text style={tw`text-xl font-semibold`}>
-                  {cartItem.product.name}
-                </Text>
-              </View>
-              <View>
-                <Text style={tw`text-base text-red-400 font-medium`}>
-                  ${cartItem.product.price}
-                </Text>
-              </View>
-            </View>
+            <CartItem key={cartItem.product._id + index} cartItem={cartItem} />
           );
-        })}
-      </ScrollView>
+        })} */}
+      </View>
       <View
         style={tw`absolute bottom-0 z-10 left-0 w-full bg-white px-4 py-4 rounded-md shadow-lg flex-row items-center justify-between`}
       >

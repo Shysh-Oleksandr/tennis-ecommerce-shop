@@ -51,7 +51,7 @@ export const cartSlice = createSlice({
     },
     removeFromCart: (state, { payload }: PayloadAction<IOrderItem>) => {
       state.cartItems = state.cartItems.filter(
-        (cartItem) => cartItem !== payload
+        (cartItem) => cartItem.product._id !== payload.product._id
       );
     },
     clearCart: (state) => {
