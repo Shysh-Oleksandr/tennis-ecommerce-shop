@@ -4,7 +4,6 @@ import tw from "tailwind-react-native-classnames";
 import IProduct from "../../interfaces/product";
 import ProductImage from "./ProductImage";
 import { useAppDispatch } from "./../../app/hooks";
-import { addToCart } from "../../features/cart/cartSlice";
 import AddProductBtn from "./AddProductBtn";
 
 type Props = {
@@ -15,6 +14,7 @@ const SingleProduct = ({ route }: Props) => {
   const [item, setItem] = useState<IProduct>(route.params.item);
   const [availability, setAvailability] = useState(false);
   const dispatch = useAppDispatch();
+
   return (
     <View style={tw`relative h-full`}>
       <ScrollView style={tw`mb-20 p-2`}>

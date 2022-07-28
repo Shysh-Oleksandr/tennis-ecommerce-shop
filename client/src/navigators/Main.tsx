@@ -21,7 +21,7 @@ const Main = () => {
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="HomeScreen"
         component={HomeNavigator}
         options={{
           tabBarIcon: ({ color }) => (
@@ -35,7 +35,7 @@ const Main = () => {
         }}
       />
       <Tab.Screen
-        name="Cart"
+        name="CartScreen"
         component={CartNavigator}
         options={{
           tabBarIcon: ({ color }) => (

@@ -27,7 +27,7 @@ const Checkout = (props: Props) => {
     const order: IOrder = {
       city,
       country,
-      dateCreated: new Date(),
+      dateCreated: Date.now(),
       phone: Number(phone),
       zip,
       shippingAddress1: address,
