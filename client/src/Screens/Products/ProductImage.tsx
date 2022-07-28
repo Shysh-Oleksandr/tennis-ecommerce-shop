@@ -4,14 +4,14 @@ import { EMULATOR_API } from "../../constants";
 
 type Props = {
   image: string;
-  styles: any;
+  styles?: any;
 };
 
 const ProductImage = ({ image, styles }: Props) => {
   return (
     <Image
       resizeMode="contain"
-      style={styles}
+      style={[styles, { backgroundColor: "transparent" }]}
       source={{ uri: image.replace("localhost", EMULATOR_API) }}
     />
   );

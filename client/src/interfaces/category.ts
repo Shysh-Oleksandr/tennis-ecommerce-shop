@@ -3,5 +3,5 @@ export default interface ICategory {
   color: string;
   icon: string;
   image: string;
-  id: string;
+  _id: string;
 }

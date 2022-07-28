@@ -6,18 +6,23 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import ProductContainer from "./src/Screens/Products/ProductContainer";
 import Header from "./src/shared/Header";
 import SafeAreaView from "react-native-safe-area-view";
+import { NavigationContainer } from "@react-navigation/native";
+import Main from "./src/navigators/Main";
+import { Provider } from "react-redux";
+import { store } from "./src/app/store";
 
 export default function App() {
   return (
-    <NativeBaseProvider>
-      <SafeAreaProvider>
-        <SafeAreaView style={styles.container}>
-          <Header />
-          <ProductContainer />
-          <StatusBar style="auto" />
-        </SafeAreaView>
-      </SafeAreaProvider>
-    </NativeBaseProvider>
+    <Provider store={store}>
+      <NavigationContainer>
+        <NativeBaseProvider>
+          <SafeAreaProvider>
+            <Header />
+            <Main />
+          </SafeAreaProvider>
+        </NativeBaseProvider>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

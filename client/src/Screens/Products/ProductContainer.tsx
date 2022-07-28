@@ -1,7 +1,6 @@
 import { Input } from "native-base";
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
-import SafeAreaView from "react-native-safe-area-view";
+import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import tw from "tailwind-react-native-classnames";
 import { API_URL } from "../../constants";
@@ -13,9 +12,7 @@ import CategoryFilters from "./CategoryFilters";
 import ProductList from "./ProductList";
 import SearchedProducts from "./SearchedProducts";
 
-type Props = {};
-
-const ProductContainer = (props: Props) => {
+const ProductContainer = (props: any) => {
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const [categoryProducts, setCategoryProducts] = useState<IProduct[]>([]);
   const [products, setProducts] = useFetchData<IProduct>(
@@ -91,7 +88,6 @@ const ProductContainer = (props: Props) => {
           style={styles.searchInput}
           placeholder="Search"
           onFocus={onFocus}
-          onBlur={onBlur}
         />
         {focus && (
           <Icon
@@ -102,7 +98,10 @@ const ProductContainer = (props: Props) => {
         )}
       </View>
       {focus ? (
-        <SearchedProducts filteredProducts={filteredProducts} />
+        <SearchedProducts
+          navigation={props.navigation}
+          filteredProducts={filteredProducts}
+        />
       ) : (
         <FlatList
           ListEmptyComponent={
@@ -113,7 +112,13 @@ const ProductContainer = (props: Props) => {
           style={{ flexDirection: "column", flex: 1 }}
           numColumns={2}
           data={productsData}
-          renderItem={({ item }) => <ProductList key={item._id} item={item} />}
+          renderItem={({ item }) => (
+            <ProductList
+              navigation={props.navigation}
+              key={item._id}
+              item={item}
+            />
+          )}
           keyExtractor={(item) => item._id}
           contentContainerStyle={{
             flexGrow: 1,

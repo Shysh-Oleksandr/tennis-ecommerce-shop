@@ -1,31 +1,42 @@
 import React from "react";
-import { Dimensions, FlatList, Text, View } from "react-native";
+import {
+  Dimensions,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import tw from "tailwind-react-native-classnames";
 import IProduct from "../../interfaces/product";
 import SearchedProduct from "./SearchedProduct";
 
 type Props = {
   filteredProducts: IProduct[];
+  navigation: any;
 };
 
 const { width } = Dimensions.get("window");
 
-const SearchedProducts = ({ filteredProducts }: Props) => {
+const SearchedProducts = ({ filteredProducts, navigation }: Props) => {
   return (
-    <View style={{ width: width - 40 }}>
+    <View style={{ width: width - 40, marginHorizontal: 20 }}>
       {filteredProducts.length > 0 ? (
-        <View>
+        <>
           <FlatList
             data={filteredProducts}
             renderItem={({ item }) => (
-              <SearchedProduct key={item._id} product={item} />
+              <SearchedProduct
+                navigation={navigation}
+                key={item._id}
+                product={item}
+              />
             )}
             keyExtractor={(item) => item._id}
           />
-        </View>
+        </>
       ) : (
         <View style={tw`items-center justify-center`}>
-          <Text style={tw`text-center`}>
+          <Text style={tw`text-center text-xl`}>
             No products match the selected filter
           </Text>
         </View>

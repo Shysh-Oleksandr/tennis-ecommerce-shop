@@ -38,11 +38,11 @@ const CategoryFilters = ({
           <CategoryItem
             setActiveCategory={setActiveCategory}
             activeCategory={activeCategory}
-            key={item.id}
+            key={item._id}
             category={item.name}
           />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id}
       />
     </View>
   );

@@ -1,14 +1,8 @@
-import {
-  Button,
-  Dimensions,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
 import React from "react";
+import { Button, Dimensions, StyleSheet, Text, View } from "react-native";
+import { useAppDispatch } from "../../app/hooks";
+import { addToCart } from "../../features/cart/cartSlice";
 import IProduct from "../../interfaces/product";
-import { EMULATOR_API } from "../../constants";
 import ProductImage from "./ProductImage";
 
 type Props = {
@@ -18,6 +12,7 @@ type Props = {
 const { width } = Dimensions.get("window");
 
 const ProductCard = ({ item }: Props) => {
+  const dispatch = useAppDispatch();
   return (
     <View style={styles.container}>
       <ProductImage image={item.image} styles={styles.image} />
@@ -31,7 +26,11 @@ const ProductCard = ({ item }: Props) => {
 
       {item.countInStock > 0 ? (
         <View style={{ marginBottom: 40, marginTop: 10 }}>
-          <Button title="Add" color="green" />
+          <Button
+            title="Add"
+            color="green"
+            onPress={() => dispatch(addToCart({ quantity: 1, product: item }))}
+          />
         </View>
       ) : (
         <Text style={{ marginTop: 20 }}>Currently Unavailable</Text>
