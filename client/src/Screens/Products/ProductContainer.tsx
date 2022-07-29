@@ -1,18 +1,12 @@
-import { Input } from "native-base";
 import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
-import Icon from "react-native-vector-icons/AntDesign";
+import { FlatList, Text, View } from "react-native";
 import tw from "tailwind-react-native-classnames";
 import { API_URL } from "../../constants";
 import { useFetchData } from "../../hooks/useFetchData";
 import Banner from "../../shared/Banner";
+import Loading from "../../shared/UI/Loading";
+import SearchInput from "../../shared/UI/SearchInput";
+import useDebounce from "./../../hooks/useDebounced";
 import ICategory from "./../../interfaces/category";
 import IProduct from "./../../interfaces/product";
 import CategoryFilters from "./CategoryFilters";
@@ -36,6 +30,8 @@ const ProductContainer = (props: any) => {
   const [initialState, setInitialState] = useState(products);
   const [focus, setFocus] = useState(false);
   const isCategoryChosen: boolean = activeCategory.toLowerCase() === "all";
+  const [searchValue, setSearchValue] = useState("");
+  const debouncedSearchValue = useDebounce(searchValue, 500);
   const productsData: IProduct[] = isCategoryChosen
     ? products
     : categoryProducts;
@@ -44,6 +40,10 @@ const ProductContainer = (props: any) => {
     setFilteredProducts(products);
     setCategoryProducts(products);
   }, [products]);
+
+  useEffect(() => {
+    searchProduct(debouncedSearchValue);
+  }, [debouncedSearchValue]);
 
   const searchProduct = (text: string) => {
     setFilteredProducts(
@@ -89,25 +89,14 @@ const ProductContainer = (props: any) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={styles.searchContainer}>
-        <Input
-          onChangeText={(text) => searchProduct(text)}
-          style={styles.searchInput}
-          placeholder="Search"
-          onFocus={onFocus}
-        />
-        {focus && (
-          <Icon
-            name="close"
-            style={{ position: "absolute", right: 6, top: "20%", fontSize: 25 }}
-            onPress={onBlur}
-          />
-        )}
-      </View>
+      <SearchInput
+        setSearchValue={setSearchValue}
+        focus={focus}
+        onBlur={onBlur}
+        onFocus={onFocus}
+      />
       {productsLoading ? (
-        <View style={tw`items-center justify-center flex-1`}>
-          <ActivityIndicator size={70} color="blue" />
-        </View>
+        <Loading />
       ) : (
         <>
           {focus ? (
@@ -145,17 +134,3 @@ const ProductContainer = (props: any) => {
 };
 
 export default ProductContainer;
-
-const styles = StyleSheet.create({
-  searchInput: {
-    borderRadius: 12,
-    paddingHorizontal: 10,
-    fontSize: 16,
-    backgroundColor: "lightgray",
-  },
-  searchContainer: {
-    marginHorizontal: 15,
-    marginBottom: 15,
-    position: "relative",
-  },
-});

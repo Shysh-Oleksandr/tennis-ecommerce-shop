@@ -1,5 +1,5 @@
 import { View, Text, ActivityIndicator, FlatList } from "react-native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -9,6 +9,9 @@ import ICategory from "../../interfaces/category";
 import { API_URL } from "../../constants";
 import tw from "tailwind-react-native-classnames";
 import ProductItem from "./ProductItem";
+import Loading from "../../shared/UI/Loading";
+import SearchInput from "../../shared/UI/SearchInput";
+import useDebounce from "../../hooks/useDebounced";
 
 type Props = {};
 
@@ -18,12 +21,17 @@ const Products = (props: Props) => {
     `${API_URL}/products`,
     "products"
   );
+  const [filteredProducts, setFilteredProducts] =
+    useState<IProduct[]>(products);
+
+  const [searchValue, setSearchValue] = useState("");
+  const debouncedSearchValue = useDebounce(searchValue, 500);
+
   const [categories, categoriesLoading] = useFetchData<ICategory>(
     "GET",
     `${API_URL}/categories`,
     "categories"
   );
-  const [productFIlter, setProductFilter] = useState([]);
   const [token, setToken] = useState("");
 
   useFocusEffect(
@@ -36,24 +44,59 @@ const Products = (props: Props) => {
     }, [])
   );
 
-  if (productsLoading) {
+  const searchProduct = (text: string) => {
+    setFilteredProducts(
+      products.filter((i) => i.name.toLowerCase().includes(text.toLowerCase()))
+    );
+  };
+
+  useEffect(() => {
+    searchProduct(debouncedSearchValue);
+  }, [debouncedSearchValue]);
+
+  const getTableHeader = () => {
     return (
-      <View style={tw`items-center justify-center flex-1`}>
-        <ActivityIndicator size={70} color="blue" />
+      <View
+        style={tw`flex-row w-full flex-1 bg-gray-200 px-4 py-2 items-center shadow-lg`}
+      >
+        <Text numberOfLines={1} style={tw`text-base w-12 font-bold`}></Text>
+        <Text numberOfLines={1} style={tw`text-base w-1/5 mr-3 px-1 font-bold`}>
+          Brand
+        </Text>
+        <Text numberOfLines={1} style={tw`text-base w-1/5 mr-3 px-1 font-bold`}>
+          Name
+        </Text>
+        <Text numberOfLines={1} style={tw`text-base w-1/5 mr-3 px-1 font-bold`}>
+          Category
+        </Text>
+        <Text numberOfLines={1} style={tw`text-base w-1/5 mr-3 px-1 font-bold`}>
+          Price
+        </Text>
       </View>
     );
+  };
+
+  if (productsLoading) {
+    return <Loading />;
   }
   return (
     <View>
-      {/* <FlatList
+      <SearchInput setSearchValue={setSearchValue} />
+      <FlatList
         ListEmptyComponent={
-          <Text style={tw`text-2xl text-center`}>No products found</Text>
+          <Text style={tw`text-2xl mt-4 text-center`}>No products found</Text>
         }
-        style={{ flexDirection: "column", flex: 1 }}
-        data={products}
-        renderItem={({ item }) => <ProductItem key={item._id} item={item} />}
+        data={filteredProducts}
+        ListHeaderComponent={getTableHeader}
+        renderItem={({ item, index }) => (
+          <ProductItem
+            // className={index % 2 === 1 ? tw`bg-gray-200` : ""}
+            key={item._id}
+            item={item}
+          />
+        )}
         keyExtractor={(item) => item._id}
-      /> */}
+      />
     </View>
   );
 };
