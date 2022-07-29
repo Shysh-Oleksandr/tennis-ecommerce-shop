@@ -8,13 +8,15 @@ const config = {
             socketTimeoutMS: 30000,
             keepAlive: true,
             autoIndex: false,
-            retryWrites: false
+            retryWrites: false,
         },
-        url: 'mongodb+srv://frankmelward:sashashysh3682@cluster0.afaflnt.mongodb.net/?retryWrites=true&w=majority'
+        url: "mongodb+srv://frankmelward:sashashysh3682@cluster0.ibcicnr.mongodb.net/?retryWrites=true&w=majority",
     },
     server: {
-        host: 'localhost',
-        port: process.env.PORT || 8001
-    }
+        host: "localhost",
+        port: process.env.PORT || 8001,
+    },
+    api_url: "/api/v1",
+    jwt_secret: "whereAreTheTurtles",
 };
 exports.default = config;

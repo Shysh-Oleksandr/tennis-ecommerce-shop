@@ -24,17 +24,27 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const UserSchema = new mongoose_1.Schema({
-    // uid: { type: String, unique: true },
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    passwordHash: { type: String, required: true },
-    phone: { type: String, required: true },
-    isAdmin: { type: Boolean, default: false },
-    street: { type: String, default: "" },
-    apartment: { type: String, default: "" },
-    zip: { type: String, default: "" },
-    city: { type: String, default: "" },
-    country: { type: String, default: "" },
+const OrderSchema = new mongoose_1.Schema({
+    shippingAddress1: { type: String, required: true },
+    shippingAddress2: { type: String },
+    city: { type: String, required: true },
+    zip: { type: String, required: true },
+    country: { type: String, required: true },
+    phone: { type: Number, required: true },
+    status: { type: String, required: true, default: "Pending" },
+    totalPrice: { type: Number },
+    dateOrdered: { type: Date, default: Date.now },
+    orderItems: [
+        {
+            type: mongoose_1.default.Schema.Types.ObjectId,
+            ref: "OrderItem",
+            required: true,
+        },
+    ],
+    user: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "User",
+    },
+    id: { type: String, unique: true },
 });
-exports.default = mongoose_1.default.model("User", UserSchema);
+exports.default = mongoose_1.default.model("Order", OrderSchema);
