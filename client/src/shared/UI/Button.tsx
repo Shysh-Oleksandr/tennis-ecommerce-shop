@@ -10,13 +10,15 @@ import tw from "tailwind-react-native-classnames";
 
 type Props = {
   text: string;
+  disabled?: boolean;
   className?: any;
   onPress: (event: GestureResponderEvent) => void;
 };
 
-const Button = ({ text, onPress, className }: Props) => {
+const Button = ({ text, onPress, className, disabled }: Props) => {
   return (
     <TouchableOpacity
+      disabled={disabled}
       activeOpacity={0.7}
       onPress={onPress}
       style={[

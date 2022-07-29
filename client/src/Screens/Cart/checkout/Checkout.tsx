@@ -44,7 +44,7 @@ const Checkout = (props: Props) => {
   return (
     <KeyboardAwareScrollView
       viewIsInsideTabBar={true}
-      extraHeight={100}
+      extraHeight={200}
       enableOnAndroid={true}
     >
       <FormContainer title="Shipping Address">
@@ -90,7 +90,7 @@ const Checkout = (props: Props) => {
               return item;
             }}
             search={true}
-            buttonStyle={tw`w-full bg-white h-16 m-3 rounded-md p-3 border-2 border-gray-500`}
+            buttonStyle={tw`w-full bg-white h-16 m-3 rounded-2xl p-3 border-2 border-blue-500`}
           />
           <Button text="Confirm" onPress={() => checkOut()} />
         </>

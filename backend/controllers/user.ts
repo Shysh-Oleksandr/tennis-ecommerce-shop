@@ -101,7 +101,7 @@ const update = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const login = (req: Request, res: Response, next: NextFunction) => {
-  logging.info("Loggin in user...");
+  logging.info("Loginning user...");
 
   let { email, password } = req.body;
 
@@ -109,12 +109,6 @@ const login = (req: Request, res: Response, next: NextFunction) => {
     .then((user) => {
       if (user) {
         logging.info(`User ${email} found...`);
-        logging.info(
-          `${password}  . bcry: ${bcrypt.hashSync(password, 10)} hash: ${
-            user.passwordHash
-          }.`
-        );
-        logging.info(bcrypt.compareSync(password, user.passwordHash));
 
         if (bcrypt.compareSync(password, user.passwordHash)) {
           logging.info(`Password matches, signing in...`);
@@ -128,7 +122,7 @@ const login = (req: Request, res: Response, next: NextFunction) => {
           );
 
           return res.status(200).json({
-            user: user.email,
+            user: user,
             token,
           });
         } else {
@@ -139,7 +133,7 @@ const login = (req: Request, res: Response, next: NextFunction) => {
         }
       } else {
         logging.info(`User ${email} not found`);
-        return res.status(200).json({
+        return res.status(404).json({
           message: "User not found",
         });
       }

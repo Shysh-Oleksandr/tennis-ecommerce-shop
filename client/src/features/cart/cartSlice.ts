@@ -49,9 +49,9 @@ export const cartSlice = createSlice({
     addToCart: (state, { payload }: PayloadAction<IOrderItem>) => {
       state.cartItems = [...state.cartItems, payload];
     },
-    removeFromCart: (state, { payload }: PayloadAction<IOrderItem>) => {
+    removeFromCart: (state, { payload }: PayloadAction<string>) => {
       state.cartItems = state.cartItems.filter(
-        (cartItem) => cartItem.product._id !== payload.product._id
+        (cartItem) => cartItem.product._id !== payload
       );
     },
     clearCart: (state) => {

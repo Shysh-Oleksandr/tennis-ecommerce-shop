@@ -2,14 +2,18 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View } from "native-base";
 import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { useAppSelector } from "../app/hooks";
 import CartIcon from "../shared/CartIcon";
 import Header from "../shared/Header";
+import AdminNavigator from "./AdminNavigator";
 import CartNavigator from "./CartNavigator";
 import HomeNavigator from "./HomeNavigator";
+import UserNavigator from "./UserNavigator";
 
 const Tab = createBottomTabNavigator();
 
 const Main = () => {
+  const { user } = useAppSelector((store) => store.user);
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -51,18 +55,21 @@ const Main = () => {
           ),
         }}
       />
-      <Tab.Screen
-        name="Admin"
-        component={HomeNavigator}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Icon name="cog" color={color} size={30} />
-          ),
-        }}
-      />
+      {user.isAdmin ? (
+        <Tab.Screen
+          name="Admin"
+          component={AdminNavigator}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Icon name="cog" color={color} size={30} />
+            ),
+          }}
+        />
+      ) : null}
+
       <Tab.Screen
         name="User"
-        component={HomeNavigator}
+        component={UserNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <Icon name="user" color={color} size={30} />

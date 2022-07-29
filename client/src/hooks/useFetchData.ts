@@ -11,7 +11,6 @@ export function useFetchData<T>(
   const [loading, setLoading] = useState<boolean>(true);
 
   async function fetchData() {
-    console.log("fetch");
     setLoading(true);
     try {
       const response = await axios({

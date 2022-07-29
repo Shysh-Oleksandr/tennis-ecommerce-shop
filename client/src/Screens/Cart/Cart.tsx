@@ -6,7 +6,9 @@ import tw from "tailwind-react-native-classnames";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { clearCart, removeFromCart } from "../../features/cart/cartSlice";
 import IOrderItem from "../../interfaces/orderItem";
+import IProduct from "../../interfaces/product";
 import CartItem from "./CartItem";
+import Toast from "react-native-toast-message";
 
 type Props = {
   navigation: any;
@@ -26,6 +28,23 @@ const Cart = (props: Props) => {
   const dispatch = useAppDispatch();
 
   const total = getTotalPrice(cartItems);
+
+  const removeProduct = (item: IProduct) => {
+    dispatch(removeFromCart(item._id));
+    Toast.show({
+      topOffset: 60,
+      type: "success",
+      text1: `${item.name} was removed from the Cart`,
+    });
+  };
+  const clearAllProducts = () => {
+    dispatch(clearCart());
+    Toast.show({
+      topOffset: 60,
+      type: "success",
+      text1: `All products were removed from the Cart`,
+    });
+  };
 
   if (cartItems.length === 0) {
     return (
@@ -55,7 +74,7 @@ const Cart = (props: Props) => {
                 <TouchableOpacity
                   activeOpacity={0.7}
                   style={tw`bg-red-500 justify-center items-end pr-6 h-16 mt-2 w-full`}
-                  onPress={() => dispatch(removeFromCart(item.item))}
+                  onPress={() => removeProduct(item.item.product)}
                 >
                   <Icon name="trash" color={"white"} size={30} />
                 </TouchableOpacity>
@@ -82,7 +101,7 @@ const Cart = (props: Props) => {
         </View>
         <View style={tw`flex-row items-center`}>
           <View style={tw`mr-2`}>
-            <Button onPress={() => dispatch(clearCart())} title="Clear" />
+            <Button onPress={clearAllProducts} title="Clear" />
           </View>
           <View>
             <Button
