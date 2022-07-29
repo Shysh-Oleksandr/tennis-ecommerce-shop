@@ -46,7 +46,9 @@ const Cart = (props: Props) => {
       <View style={tw`w-full mb-16`}>
         <SwipeListView
           data={cartItems}
-          renderItem={(item) => <CartItem cartItem={item.item} />}
+          renderItem={(item) => (
+            <CartItem cartItem={item.item} imageClassName={tw`w-14 h-14`} />
+          )}
           renderHiddenItem={(item) => {
             return (
               <View style={tw`flex-1 justify-end flex-row `}>
@@ -69,11 +71,6 @@ const Cart = (props: Props) => {
           stopLeftSwipe={75}
           rightOpenValue={-75}
         />
-        {/* {cartItems.map((cartItem, index) => {
-          return (
-            <CartItem key={cartItem.product._id + index} cartItem={cartItem} />
-          );
-        })} */}
       </View>
       <View
         style={tw`absolute bottom-0 z-10 left-0 w-full bg-white px-4 py-4 rounded-md shadow-lg flex-row items-center justify-between`}

@@ -9,6 +9,7 @@ import { useAppSelector } from "../../../app/hooks";
 import IOrder from "../../../interfaces/order";
 import FormContainer from "../../../shared/Form/FormContainer";
 import Input from "../../../shared/Form/Input";
+import Button from "../../../shared/UI/Button";
 import { getTotalPrice } from "./../Cart";
 type Props = {
   navigation: any;
@@ -16,12 +17,12 @@ type Props = {
 
 const Checkout = (props: Props) => {
   const { cartItems } = useAppSelector((store) => store.cart);
-  const [address, setAddress] = useState<string>("");
+  const [address, setAddress] = useState<string>("London, Backer St. 221b");
   const [address2, setAddress2] = useState<string>("");
-  const [city, setCity] = useState<string>("");
-  const [zip, setZip] = useState<string>("");
-  const [country, setCountry] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
+  const [city, setCity] = useState<string>("London");
+  const [zip, setZip] = useState<string>("78419");
+  const [country, setCountry] = useState<string>("Albania");
+  const [phone, setPhone] = useState<string>("175649889");
 
   const checkOut = () => {
     const order: IOrder = {
@@ -43,7 +44,7 @@ const Checkout = (props: Props) => {
   return (
     <KeyboardAwareScrollView
       viewIsInsideTabBar={true}
-      extraHeight={200}
+      extraHeight={100}
       enableOnAndroid={true}
     >
       <FormContainer title="Shipping Address">
@@ -89,14 +90,9 @@ const Checkout = (props: Props) => {
               return item;
             }}
             search={true}
-            buttonStyle={tw`w-4/5 bg-white h-16 m-3 rounded-md p-3 border-2 border-gray-500`}
+            buttonStyle={tw`w-full bg-white h-16 m-3 rounded-md p-3 border-2 border-gray-500`}
           />
-          <Pressable
-            onPress={() => checkOut()}
-            style={tw`w-4/5 items-center mt-3 bg-blue-500 rounded-md py-3 px-4 shadow-lg`}
-          >
-            <Text style={tw`text-2xl text-white font-semibold`}>Confirm</Text>
-          </Pressable>
+          <Button text="Confirm" onPress={() => checkOut()} />
         </>
       </FormContainer>
     </KeyboardAwareScrollView>

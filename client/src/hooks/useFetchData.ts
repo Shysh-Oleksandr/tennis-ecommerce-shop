@@ -1,16 +1,18 @@
+import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
-import { SetStateAction } from "react";
-import { Dispatch } from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 export function useFetchData<T>(
   method: string = "GET",
   url: string,
   name: string
-): [T[], Dispatch<SetStateAction<T[]>>] {
+): [T[], boolean] {
   const [items, setItems] = useState<T[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   async function fetchData() {
+    console.log("fetch");
+    setLoading(true);
     try {
       const response = await axios({
         method: method,
@@ -27,12 +29,16 @@ export function useFetchData<T>(
     } catch (error) {
       alert(error);
       console.log("Catch: " + error);
+    } finally {
+      setLoading(false);
     }
   }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
 
-  return [items, setItems];
+  return [items, loading];
 }

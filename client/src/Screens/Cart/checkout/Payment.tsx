@@ -1,10 +1,10 @@
 import { View, Text, Pressable } from "react-native";
 import React, { useState } from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import tw from "tailwind-react-native-classnames";
 import RadioGroup, { RadioButtonProps } from "react-native-radio-buttons-group";
 import SelectDropdown from "react-native-select-dropdown";
 import Icon from "react-native-vector-icons/FontAwesome";
+import Button from "../../../shared/UI/Button";
 
 const methodsData: RadioButtonProps[] = [
   { label: "Cash on Delivery", id: "1", selected: true },
@@ -76,12 +76,12 @@ const Payment = (props: Props) => {
           )}
         </View>
       </View>
-      <Pressable
+
+      <Button
+        text="Confirm"
+        className={tw`mb-6`}
         onPress={() => confirmPayment()}
-        style={tw`w-full items-center my-4 bg-blue-500 rounded-md py-3 px-4 shadow-lg`}
-      >
-        <Text style={tw`text-2xl text-white font-semibold`}>Confirm</Text>
-      </Pressable>
+      />
     </View>
   );
 };

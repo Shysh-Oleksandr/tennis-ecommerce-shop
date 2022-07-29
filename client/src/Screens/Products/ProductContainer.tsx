@@ -1,6 +1,13 @@
 import { Input } from "native-base";
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import tw from "tailwind-react-native-classnames";
 import { API_URL } from "../../constants";
@@ -15,12 +22,12 @@ import SearchedProducts from "./SearchedProducts";
 const ProductContainer = (props: any) => {
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const [categoryProducts, setCategoryProducts] = useState<IProduct[]>([]);
-  const [products, setProducts] = useFetchData<IProduct>(
+  const [products, productsLoading] = useFetchData<IProduct>(
     "GET",
     `${API_URL}/products`,
     "products"
   );
-  const [categories, setCategories] = useFetchData<ICategory>(
+  const [categories, categoriesLoading] = useFetchData<ICategory>(
     "GET",
     `${API_URL}/categories`,
     "categories"
@@ -97,33 +104,41 @@ const ProductContainer = (props: any) => {
           />
         )}
       </View>
-      {focus ? (
-        <SearchedProducts
-          navigation={props.navigation}
-          filteredProducts={filteredProducts}
-        />
+      {productsLoading ? (
+        <View style={tw`items-center justify-center flex-1`}>
+          <ActivityIndicator size={70} color="blue" />
+        </View>
       ) : (
-        <FlatList
-          ListEmptyComponent={
-            <Text style={tw`text-2xl text-center`}>No products found</Text>
-          }
-          ListHeaderComponent={ListHeaderComponent}
-          columnWrapperStyle={{ justifyContent: "space-between" }}
-          style={{ flexDirection: "column", flex: 1 }}
-          numColumns={2}
-          data={productsData}
-          renderItem={({ item }) => (
-            <ProductList
+        <>
+          {focus ? (
+            <SearchedProducts
               navigation={props.navigation}
-              key={item._id}
-              item={item}
+              filteredProducts={filteredProducts}
+            />
+          ) : (
+            <FlatList
+              ListEmptyComponent={
+                <Text style={tw`text-2xl text-center`}>No products found</Text>
+              }
+              ListHeaderComponent={ListHeaderComponent}
+              columnWrapperStyle={{ justifyContent: "space-between" }}
+              style={{ flexDirection: "column", flex: 1 }}
+              numColumns={2}
+              data={productsData}
+              renderItem={({ item }) => (
+                <ProductList
+                  navigation={props.navigation}
+                  key={item._id}
+                  item={item}
+                />
+              )}
+              keyExtractor={(item) => item._id}
+              contentContainerStyle={{
+                flexGrow: 1,
+              }}
             />
           )}
-          keyExtractor={(item) => item._id}
-          contentContainerStyle={{
-            flexGrow: 1,
-          }}
-        />
+        </>
       )}
     </View>
   );

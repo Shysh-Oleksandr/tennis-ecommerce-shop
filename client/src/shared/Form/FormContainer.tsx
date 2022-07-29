@@ -10,7 +10,7 @@ type Props = {
 const FormContainer = (props: Props) => {
   return (
     <ScrollView
-      contentContainerStyle={tw`mt-6 w-full pb-4 justify-center items-center`}
+      contentContainerStyle={tw`mt-6 w-5/6 mx-auto pb-2 justify-center items-center`}
     >
       <Text style={tw`text-2xl`}>{props.title}</Text>
       {props.children}

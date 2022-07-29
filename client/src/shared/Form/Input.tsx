@@ -22,7 +22,7 @@ type Props = {
 const Input = (props: Props) => {
   return (
     <TextInput
-      style={tw`w-4/5 bg-white h-16 m-3 shadow-md rounded-md p-3 border-2 border-gray-500`}
+      style={tw`w-full bg-white h-16 m-3 shadow-md rounded-md p-3 border-2 border-gray-500`}
       placeholder={props.placeholder}
       value={props.value}
       secureTextEntry={props.secureTextEntry}
