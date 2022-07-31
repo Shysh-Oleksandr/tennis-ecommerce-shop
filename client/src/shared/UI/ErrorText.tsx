@@ -8,7 +8,7 @@ const ErrorText = ({ error }: Props) => {
   if (!error) return null;
 
   return (
-    <Text style={tw`text-base text-red-500 font-semibold text-center`}>
+    <Text style={tw`text-base text-red-500 font-semibold text-center mb-2`}>
       {error}
     </Text>
   );

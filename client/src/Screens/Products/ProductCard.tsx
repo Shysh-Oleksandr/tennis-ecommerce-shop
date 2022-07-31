@@ -49,13 +49,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     elevation: 8,
     backgroundColor: "white",
+    zIndex: 40,
   },
   image: {
     width: width / 2 - 20 - 20,
-    height: width / 2 - 20 - 30,
+    height: 135,
     backgroundColor: "transparent",
     position: "absolute",
-    top: -45,
+    top: -30,
   },
   card: {
     marginBottom: 10,

@@ -21,11 +21,12 @@ export function getTotalPrice(cartItems: IOrderItem[]): number {
   cartItems.forEach((item) => {
     return (total += item.product.price * item.quantity);
   });
-  return total;
+  return Number(total.toFixed(2));
 }
 
 const Cart = (props: Props) => {
   const { cartItems } = useAppSelector((store) => store.cart);
+  const { user } = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
   const [total, setTotal] = useState(getTotalPrice(cartItems));
 
@@ -113,12 +114,21 @@ const Cart = (props: Props) => {
             />
           </View>
           <View>
-            <Button
-              text="Checkout"
-              className={tw`py-1 bg-blue-800`}
-              textClassName={tw`text-lg`}
-              onPress={() => props.navigation.navigate("Checkout")}
-            />
+            {user._id === "" ? (
+              <Button
+                text="Login"
+                className={tw`py-1 bg-blue-800`}
+                textClassName={tw`text-lg`}
+                onPress={() => props.navigation.navigate("Login")}
+              />
+            ) : (
+              <Button
+                text="Checkout"
+                className={tw`py-1 bg-blue-800`}
+                textClassName={tw`text-lg`}
+                onPress={() => props.navigation.navigate("Checkout")}
+              />
+            )}
           </View>
         </View>
       </View>

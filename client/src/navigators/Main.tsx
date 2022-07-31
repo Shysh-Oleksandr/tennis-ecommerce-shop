@@ -4,7 +4,6 @@ import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useAppSelector } from "../app/hooks";
 import CartIcon from "../shared/CartIcon";
-import Header from "../shared/Header";
 import AdminNavigator from "./AdminNavigator";
 import CartNavigator from "./CartNavigator";
 import HomeNavigator from "./HomeNavigator";
@@ -20,7 +19,7 @@ const Main = () => {
       screenOptions={{
         tabBarHideOnKeyboard: true,
         tabBarShowLabel: false,
-        tabBarActiveTintColor: "#e91e63",
+        tabBarActiveTintColor: "#3B82F6",
         headerShown: false,
       }}
     >

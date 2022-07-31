@@ -22,14 +22,14 @@ const CartItem = ({ cartItem, imageClassName, isConfirm }: Props) => {
       style={tw`items-center bg-white p-2 shadow-lg justify-between w-full px-4 flex-row`}
     >
       <View style={tw`flex-row items-center justify-between flex-1`}>
-        <View style={tw`flex-row items-center`}>
+        <View style={tw`flex-row items-center flex-1`}>
           <ProductImage
             image={product.image}
             styles={[tw`w-14 h-14 rounded-full mr-4`, imageClassName]}
           />
           <Text
             numberOfLines={1}
-            style={tw`text-xl font-semibold ${isConfirm ? "w-3/5" : ""}`}
+            style={tw`text-xl font-semibold ${isConfirm ? "w-3/5" : "w-2/3"}`}
           >
             {product.name}
           </Text>

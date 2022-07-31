@@ -7,7 +7,6 @@ const create = (req: Request, res: Response, next: NextFunction) => {
   logging.info("Attempting to register product...");
 
   const file = req.file;
-  console.log(req.file);
 
   if (!file) return res.status(400).send("No image in the request");
   const fileName = req.file?.filename;

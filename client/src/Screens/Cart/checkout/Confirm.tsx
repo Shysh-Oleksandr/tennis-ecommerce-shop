@@ -140,7 +140,7 @@ const Confirm = ({ route, navigation }: Props) => {
               >
                 <Text style={tw`text-2xl font-semibold py-3`}>Total:</Text>
                 <Text style={tw`text-red-400 text-2xl font-semibold`}>
-                  $ {totalPrice}
+                  $ {totalPrice.toFixed(2)}
                 </Text>
               </View>
             </View>

@@ -11,7 +11,7 @@ const Header = () => {
     <SafeAreaView style={[styles.header, tw`shadow-2xl`]}>
       <Pressable onPress={() => navigation.goBack()}>
         <Image
-          source={require("../../assets/logo.png")}
+          source={require("../../assets/tennis.png")}
           resizeMode="contain"
           style={{ height: 50 }}
         />

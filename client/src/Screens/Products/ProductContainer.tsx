@@ -14,9 +14,10 @@ import ProductList from "./ProductList";
 import SearchedProducts from "./SearchedProducts";
 
 const bannerImages = [
-  "https://t4.ftcdn.net/jpg/03/90/37/71/360_F_390377167_NYd4Zi29xUAxEFDcVwX8SYSbagv4At8N.jpg",
-  "https://img.freepik.com/free-psd/digital-marketing-facebook-banner-template_237398-233.jpg?w=2000",
-  "https://images.pexels.com/photos/247671/pexels-photo-247671.jpeg?cs=srgb&dl=pexels-pixabay-247671.jpg&fm=jpg",
+  "https://www.topspintennis.co.uk/upl688100044c01n.jpg",
+  "https://i.ytimg.com/vi/SzipTVz1F2Q/maxresdefault.jpg",
+  "https://iowalum.com/wp-content/uploads/2021/09/Header_Image.jpg",
+  "https://www.topspintennis.co.uk/upl756700044c01n.png",
 ];
 
 const ProductContainer = (props: any) => {
@@ -74,6 +75,8 @@ const ProductContainer = (props: any) => {
       );
     }
   };
+
+  // useFocusEffect(() => setFocus(false));
 
   useEffect(() => {
     filterProductsByCategory();

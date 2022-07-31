@@ -28,7 +28,7 @@ const Orders = ({ navigation }: Props) => {
   if (user._id === "") {
     return (
       <View style={tw`justify-center items-center mx-6 flex-1`}>
-        <Text style={tw`text-3xl text-center font-semibold text-gray-800`}>
+        <Text style={tw`text-3xl text-center font-semibold text-gray-800 mb-4`}>
           Login to see your orders
         </Text>
         <View style={tw`w-full`}>

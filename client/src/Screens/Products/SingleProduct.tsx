@@ -50,36 +50,39 @@ const SingleProduct = ({ route }: Props) => {
         {item.images && item.images.length > 0 ? (
           <Banner
             bannerImages={item.images}
-            className={{ marginBottom: -30 }}
+            className={{ marginBottom: -40 }}
           />
         ) : (
-          <ProductImage image={item.image} styles={tw`w-64 h-48 mx-auto`} />
+          <ProductImage
+            image={item.image}
+            styles={tw`w-64 h-48 mx-auto mb-4`}
+          />
         )}
         <View style={tw`bg-white mx-2 rounded-lg shadow-lg pt-2 pb-0 mb-6`}>
           <View style={tw`justify-center items-center`}>
             <Text
-              style={tw`text-3xl font-bold mb-2 border-b-2 border-gray-200 w-full text-center py-2`}
+              style={tw`text-2xl font-bold mb-2 px-2 border-b-2 border-gray-200 w-full text-center py-2`}
             >
               {item.name}
             </Text>
             <Text
-              style={tw`text-xl font-semibold mb-2 border-b-2 border-gray-200 w-full text-center pb-1`}
+              style={tw`text-xl font-semibold mb-2 px-2 border-b-2 border-gray-200 w-full text-center pb-1`}
             >
               Brand: {item.brand}
             </Text>
             <Text
-              style={tw`text-xl font-semibold mb-2 border-b-2 border-gray-200 w-full text-center pb-1`}
+              style={tw`text-xl font-semibold mb-2 px-2 border-b-2 border-gray-200 w-full text-center pb-1`}
             >
               Category: {item.category.name}
             </Text>
             <Text
-              style={tw`text-xl font-semibold mb-2 border-b-2 border-gray-200 w-full text-center pb-1`}
+              style={tw`text-xl font-semibold mb-2 px-2 border-b-2 border-gray-200 w-full text-center pb-1`}
             >
               Rating: {item.rating}/10
             </Text>
           </View>
           <View
-            style={tw`border-b-2 border-gray-200 w-full text-center pb-1 flex-row items-center justify-center`}
+            style={tw`border-b-2 border-gray-200 px-2 w-full text-center pb-1 flex-row items-center justify-center`}
           >
             <Text style={tw`text-center text-lg mr-2 font-semibold`}>
               {availabilityText}
@@ -87,16 +90,16 @@ const SingleProduct = ({ route }: Props) => {
             <CircleIndicator className={tw`${availablityColor}`} />
           </View>
           <View
-            style={tw`border-b-2 border-gray-200 w-full text-center pb-1 items-center justify-center my-2`}
+            style={tw`${
+              item.richDescription ? "border-b-2 border-gray-200 w-full" : ""
+            } text-center pb-1 items-center justify-center my-2`}
           >
-            <Text style={tw`text-base text-gray-600 font-medium`}>
+            <Text style={tw`text-base text-gray-600 font-medium px-2`}>
               {item.description}
             </Text>
           </View>
           {item.richDescription ? (
-            <View
-              style={tw`items-center justify-center my-2 border-b-2 border-gray-200 w-full text-center pb-1`}
-            >
+            <View style={tw`items-center justify-center my-2 text-center px-2`}>
               <Text style={tw`text-base text-gray-500`}>
                 {item.richDescription}
               </Text>

@@ -15,12 +15,13 @@ type Props = {
 
 const Checkout = (props: Props) => {
   const { cartItems } = useAppSelector((store) => store.cart);
-  const [address, setAddress] = useState<string>("London, Backer St. 221b");
+  const { user } = useAppSelector((store) => store.user);
+  const [address, setAddress] = useState<string>("");
   const [address2, setAddress2] = useState<string>("");
-  const [city, setCity] = useState<string>("London");
-  const [zip, setZip] = useState<string>("78419");
-  const [country, setCountry] = useState<string>("Albania");
-  const [phone, setPhone] = useState<string>("175649889");
+  const [city, setCity] = useState<string>("");
+  const [zip, setZip] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
+  const [phone, setPhone] = useState<string>(user.phone || "");
 
   const checkOut = () => {
     const order: IOrder = {
@@ -33,7 +34,7 @@ const Checkout = (props: Props) => {
       shippingAddress2: address2,
       orderItems: cartItems,
       totalPrice: getTotalPrice(cartItems),
-      _id: Math.random().toString(), //v4(),
+      _id: Math.random().toString(),
     };
 
     props.navigation.navigate("Payment", { order: order });

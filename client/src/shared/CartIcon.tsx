@@ -11,7 +11,7 @@ const CartIcon = (props: Props) => {
     <>
       {cartItems.length > 0 ? (
         <View
-          style={tw`w-5 absolute bg-red-500 rounded-full shadow-lg -top-1 -right-2 flex-1 justify-center items-center content-center`}
+          style={tw`w-5 absolute bg-blue-600 rounded-full shadow-lg -top-1 -right-2 flex-1 justify-center items-center content-center`}
         >
           <Text style={tw`text-sm font-bold text-white`}>
             {cartItems.length}

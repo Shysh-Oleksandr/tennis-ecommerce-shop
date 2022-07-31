@@ -27,7 +27,6 @@ const OrderItem = ({ order }: Props) => {
   const [deleting, setDeleting] = useState(false);
 
   async function deleteOrder() {
-    console.log(`${API_URL}/orders/${order._id}`);
     setDeleting(true);
     try {
       if (!order) throw new Error();
@@ -152,7 +151,8 @@ const OrderItem = ({ order }: Props) => {
           className={tw`w-1/2 py-1 ${isCanceled ? "bg-red-900" : "bg-red-600"}`}
         />
         <Text style={tw`text-lg font-semibold text-right`}>
-          Total: <Text style={tw`text-red-400`}>$ {order.totalPrice}</Text>
+          Total:{" "}
+          <Text style={tw`text-red-400`}>$ {order.totalPrice.toFixed(2)}</Text>
         </Text>
       </View>
     </View>

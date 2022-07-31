@@ -20,11 +20,15 @@ const SearchedProduct = ({ product, navigation }: Props) => {
         navigation.navigate("Product Detail", { item: product });
       }}
     >
-      <View style={tw`flex-row items-center mb-3`}>
+      <View style={tw`flex-row items-center mb-3 pr-2`}>
         <ProductImage image={product.image} styles={styles.image} />
-        <View>
-          <Text style={tw`text-xl font-bold`}>{product.name}</Text>
-          <Text style={tw`text-lg text-gray-400`}>{product.description}</Text>
+        <View style={tw`flex-1`}>
+          <Text numberOfLines={1} style={tw`text-xl font-bold w-full`}>
+            {product.name}
+          </Text>
+          <Text numberOfLines={3} style={tw`text-lg text-gray-400 w-full`}>
+            {product.description}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

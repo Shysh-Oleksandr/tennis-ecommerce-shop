@@ -30,7 +30,9 @@ const Payment = (props: Props) => {
   const [selectedMethod, setSelectedMethod] = useState<RadioButtonProps>(
     methodsData[0]
   );
-  const [selectedCard, setSelectedCard] = useState<RadioButtonProps>();
+  const [selectedCard, setSelectedCard] = useState<RadioButtonProps>(
+    paymentCards[0]
+  );
 
   const onMethodPress = (radioBtns: RadioButtonProps[]) => {
     setSelectedMethod(
