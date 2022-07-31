@@ -122,7 +122,7 @@ const update = (req, res, next) => {
 };
 const updateImages = (req, res, next) => {
     const _id = req.params.productID;
-    logging_1.default.info(`Incoming update for ${_id} ...`);
+    logging_1.default.info(`Incoming update images for ${_id} ...`);
     if (!mongoose_1.default.isValidObjectId(_id)) {
         return res.status(400).send("Invalid Product Id");
     }

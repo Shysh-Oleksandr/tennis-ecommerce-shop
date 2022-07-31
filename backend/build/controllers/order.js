@@ -18,7 +18,7 @@ const order_1 = __importDefault(require("../models/order"));
 const orderItem_1 = __importDefault(require("../models/orderItem"));
 const create = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     logging_1.default.info("Attempting to register order...");
-    let { shippingAddress1, shippingAddress2, city, zip, country, phone, status, totalPrice, orderItems, user, } = req.body;
+    let { shippingAddress1, shippingAddress2, city, zip, country, phone, status, orderItems, user, } = req.body;
     const orderItemsIds = Promise.all(orderItems.map((orderItem) => __awaiter(void 0, void 0, void 0, function* () {
         let newOrderItem = new orderItem_1.default({
             quantity: orderItem.quantity,
@@ -45,6 +45,7 @@ const create = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         country,
         phone,
         status,
+        dateOrdered: new Date().getTime(),
         totalPrice: orderTotalPrice,
         orderItems: orderItemsIdsResolved,
         user,

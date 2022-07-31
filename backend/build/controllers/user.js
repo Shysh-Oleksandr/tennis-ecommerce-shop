@@ -84,14 +84,12 @@ const update = (req, res, next) => {
     });
 };
 const login = (req, res, next) => {
-    logging_1.default.info("Loggin in user...");
+    logging_1.default.info("Loginning user...");
     let { email, password } = req.body;
     return user_1.default.findOne({ email })
         .then((user) => {
         if (user) {
             logging_1.default.info(`User ${email} found...`);
-            logging_1.default.info(`${password}  . bcry: ${bcryptjs_1.default.hashSync(password, 10)} hash: ${user.passwordHash}.`);
-            logging_1.default.info(bcryptjs_1.default.compareSync(password, user.passwordHash));
             if (bcryptjs_1.default.compareSync(password, user.passwordHash)) {
                 logging_1.default.info(`Password matches, signing in...`);
                 const token = jsonwebtoken_1.default.sign({
@@ -99,7 +97,7 @@ const login = (req, res, next) => {
                     isAdmin: user.isAdmin,
                 }, config_1.default.jwt_secret, { expiresIn: "30d" });
                 return res.status(200).json({
-                    user: user.email,
+                    user: user,
                     token,
                 });
             }
@@ -112,7 +110,7 @@ const login = (req, res, next) => {
         }
         else {
             logging_1.default.info(`User ${email} not found`);
-            return res.status(200).json({
+            return res.status(404).json({
                 message: "User not found",
             });
         }

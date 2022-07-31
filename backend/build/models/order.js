@@ -33,7 +33,7 @@ const OrderSchema = new mongoose_1.Schema({
     phone: { type: Number, required: true },
     status: { type: String, required: true, default: "Pending" },
     totalPrice: { type: Number },
-    dateOrdered: { type: Date, default: Date.now },
+    dateOrdered: { type: Number, default: new Date().getTime() },
     orderItems: [
         {
             type: mongoose_1.default.Schema.Types.ObjectId,

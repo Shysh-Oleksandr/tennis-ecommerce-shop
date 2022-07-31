@@ -12,5 +12,5 @@ router.post("/create", order_1.default.create);
 router.patch("/update/:orderID", order_1.default.update);
 router.delete("/:orderID", order_1.default.deleteOrder);
 router.get("/", order_1.default.readAll);
-router.get("/get/userorders/:userID", order_1.default.readUserOrders);
+router.get("/:userID", order_1.default.readUserOrders);
 module.exports = router;
