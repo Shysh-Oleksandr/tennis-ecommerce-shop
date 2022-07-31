@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Button, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import Icon from "react-native-vector-icons/FontAwesome";
 import tw from "tailwind-react-native-classnames";
@@ -9,6 +9,7 @@ import IOrderItem from "../../interfaces/orderItem";
 import IProduct from "../../interfaces/product";
 import CartItem from "./CartItem";
 import Toast from "react-native-toast-message";
+import Button from "../../shared/UI/Button";
 
 type Props = {
   navigation: any;
@@ -104,11 +105,18 @@ const Cart = (props: Props) => {
         </View>
         <View style={tw`flex-row items-center`}>
           <View style={tw`mr-2`}>
-            <Button onPress={clearAllProducts} title="Clear" />
+            <Button
+              onPress={clearAllProducts}
+              text="Clear"
+              className={tw`py-1 bg-blue-500`}
+              textClassName={tw`text-lg`}
+            />
           </View>
           <View>
             <Button
-              title="Checkout"
+              text="Checkout"
+              className={tw`py-1 bg-blue-800`}
+              textClassName={tw`text-lg`}
               onPress={() => props.navigation.navigate("Checkout")}
             />
           </View>

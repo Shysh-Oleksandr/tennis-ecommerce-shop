@@ -1,18 +1,21 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import SafeAreaView from "react-native-safe-area-view";
 import tw from "tailwind-react-native-classnames";
+import { useNavigation } from "@react-navigation/native";
 
-type Props = {};
+const Header = () => {
+  const navigation = useNavigation();
 
-const Header = (props: Props) => {
   return (
     <SafeAreaView style={[styles.header, tw`shadow-2xl`]}>
-      <Image
-        source={require("../../assets/logo.png")}
-        resizeMode="contain"
-        style={{ height: 50 }}
-      />
+      <Pressable onPress={() => navigation.goBack()}>
+        <Image
+          source={require("../../assets/logo.png")}
+          resizeMode="contain"
+          style={{ height: 50 }}
+        />
+      </Pressable>
     </SafeAreaView>
   );
 };

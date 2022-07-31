@@ -8,21 +8,21 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Swiper from "react-native-swiper";
+import { formatImageUrl } from "./../Screens/Products/ProductImage";
 
 const { width } = Dimensions.get("window");
 
-type Props = {};
+type Props = {
+  bannerImages: string[];
+  className?: any;
+};
 
-const Banner = (props: Props) => {
-  const [bannerData, setBannerData] = useState([
-    "https://t4.ftcdn.net/jpg/03/90/37/71/360_F_390377167_NYd4Zi29xUAxEFDcVwX8SYSbagv4At8N.jpg",
-    "https://img.freepik.com/free-psd/digital-marketing-facebook-banner-template_237398-233.jpg?w=2000",
-    "https://images.pexels.com/photos/247671/pexels-photo-247671.jpeg?cs=srgb&dl=pexels-pixabay-247671.jpg&fm=jpg",
-  ]);
+const Banner = ({ bannerImages, className }: Props) => {
+  const [bannerData, setBannerData] = useState(bannerImages);
 
   return (
     <ScrollView>
-      <View style={styles.container}>
+      <View style={[styles.container, className]}>
         <View style={styles.swiper}>
           <Swiper
             style={{ height: width / 2 }}
@@ -36,7 +36,7 @@ const Banner = (props: Props) => {
                   key={item}
                   style={styles.bannerImage}
                   resizeMode="contain"
-                  source={{ uri: item }}
+                  source={{ uri: formatImageUrl(item) }}
                 />
               );
             })}
@@ -53,7 +53,6 @@ export default Banner;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "gainsboro",
   },
   swiper: {
     width: width,
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   bannerImage: {
-    height: width / 3,
+    height: 150,
     width: width - 40,
     borderRadius: 10,
     marginHorizontal: 20,

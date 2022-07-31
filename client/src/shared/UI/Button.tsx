@@ -29,7 +29,7 @@ const Button = ({
       activeOpacity={0.7}
       onPress={onPress}
       style={[
-        tw`w-full items-center my-4 bg-blue-500 rounded-md py-3 px-4 shadow-lg`,
+        tw`w-full items-center bg-blue-500 rounded-md py-3 px-4 shadow-lg`,
         className,
       ]}
     >

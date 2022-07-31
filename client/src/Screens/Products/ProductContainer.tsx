@@ -13,6 +13,12 @@ import CategoryFilters from "./CategoryFilters";
 import ProductList from "./ProductList";
 import SearchedProducts from "./SearchedProducts";
 
+const bannerImages = [
+  "https://t4.ftcdn.net/jpg/03/90/37/71/360_F_390377167_NYd4Zi29xUAxEFDcVwX8SYSbagv4At8N.jpg",
+  "https://img.freepik.com/free-psd/digital-marketing-facebook-banner-template_237398-233.jpg?w=2000",
+  "https://images.pexels.com/photos/247671/pexels-photo-247671.jpeg?cs=srgb&dl=pexels-pixabay-247671.jpg&fm=jpg",
+];
+
 const ProductContainer = (props: any) => {
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const [categoryProducts, setCategoryProducts] = useState<IProduct[]>([]);
@@ -76,7 +82,7 @@ const ProductContainer = (props: any) => {
   const ListHeaderComponent = (
     <>
       <View>
-        <Banner />
+        <Banner bannerImages={bannerImages} />
       </View>
 
       <CategoryFilters

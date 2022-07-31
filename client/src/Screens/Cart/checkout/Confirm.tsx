@@ -145,7 +145,11 @@ const Confirm = ({ route, navigation }: Props) => {
               </View>
             </View>
           </View>
-          <Button text="Place Order" onPress={() => confirmOrder()} />
+          <Button
+            text="Place Order"
+            onPress={() => confirmOrder()}
+            className={tw`my-2`}
+          />
         </View>
       ) : null}
     </ScrollView>

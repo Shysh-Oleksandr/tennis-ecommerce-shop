@@ -7,12 +7,16 @@ type Props = {
   styles?: any;
 };
 
+export const formatImageUrl = (url: string) => {
+  return url.replace("localhost", EMULATOR_API);
+};
+
 const ProductImage = ({ image, styles }: Props) => {
   return (
     <Image
       resizeMode="contain"
       style={[styles, { backgroundColor: "transparent" }]}
-      source={{ uri: image.replace("localhost", EMULATOR_API) }}
+      source={{ uri: formatImageUrl(image) }}
     />
   );
 };

@@ -120,17 +120,25 @@ const OrderItem = ({ order }: Props) => {
         {new Date(order.dateOrdered).toLocaleDateString()}
       </Text>
       <Text style={tw`text-base font-semibold text-gray-800`}>Products:</Text>
-      <View style={[tw`items-center flex-row`, { flexWrap: "wrap" }]}>
+      <View style={[tw`items-center flex-row mb-2`, { flexWrap: "wrap" }]}>
         {order.orderItems.map((orderItem) => {
           return (
             <View
               key={orderItem.product._id}
-              style={tw`items-center justify-between flex-row w-1/2 border-2 border-gray-100 py-1 px-2`}
+              style={tw`items-center justify-between flex-row w-full border-2 border-gray-200 py-1 px-2`}
             >
-              <Text style={tw`text-base font-semibold mr-2`}>
+              <Text
+                numberOfLines={1}
+                style={tw`text-base font-semibold mr-2 w-2/3`}
+              >
                 {orderItem.product.name}
               </Text>
-              <Text style={tw`text-base`}>x{orderItem.quantity}</Text>
+              <View style={tw`flex-row items-center`}>
+                <Text style={tw`text-base`}>x{orderItem.quantity}</Text>
+                <Text style={tw`text-base ml-2 text-red-400`}>
+                  $ {orderItem.product.price * orderItem.quantity}
+                </Text>
+              </View>
             </View>
           );
         })}

@@ -7,6 +7,8 @@ const create = (req: Request, res: Response, next: NextFunction) => {
   logging.info("Attempting to register product...");
 
   const file = req.file;
+  console.log(req.file);
+
   if (!file) return res.status(400).send("No image in the request");
   const fileName = req.file?.filename;
   const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
@@ -143,7 +145,7 @@ const update = (req: Request, res: Response, next: NextFunction) => {
 
 const updateImages = (req: Request, res: Response, next: NextFunction) => {
   const _id = req.params.productID;
-  logging.info(`Incoming update for ${_id} ...`);
+  logging.info(`Incoming update images for ${_id} ...`);
 
   if (!mongoose.isValidObjectId(_id)) {
     return res.status(400).send("Invalid Product Id");

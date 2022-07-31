@@ -1,14 +1,15 @@
-import { View, Text, Button } from "react-native";
 import React from "react";
 import { useAppSelector } from "../../app/hooks";
 import IProduct from "./../../interfaces/product";
 import { useAppDispatch } from "./../../app/hooks";
 import { addToCart, removeFromCart } from "../../features/cart/cartSlice";
 import Toast from "react-native-toast-message";
+import Button from "./../../shared/UI/Button";
+import tw from "tailwind-react-native-classnames";
 
-type Props = { item: IProduct };
+type Props = { item: IProduct; className?: any };
 
-const AddProductBtn = ({ item }: Props) => {
+const AddProductBtn = ({ item, className }: Props) => {
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector((store) => store.cart);
   const isAdded = cartItems.map((item) => item.product._id).includes(item._id);
@@ -32,9 +33,13 @@ const AddProductBtn = ({ item }: Props) => {
   };
   return (
     <Button
-      color={isAdded ? "gray" : "blue"}
-      title={isAdded ? "Remove" : "Add"}
+      text={isAdded ? "Remove" : "Add"}
       onPress={isAdded ? removeProduct : addProduct}
+      textClassName={tw`text-lg`}
+      className={[
+        tw`${isAdded ? "bg-blue-900" : "bg-blue-500"} py-1`,
+        className,
+      ]}
     />
   );
 };

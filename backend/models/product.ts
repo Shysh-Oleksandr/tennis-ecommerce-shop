@@ -8,7 +8,7 @@ const ProductSchema: Schema = new Schema({
   image: { type: String, default: "" },
   images: [{ type: String }],
   brand: { type: String, default: "" },
-  countInStock: { type: Number, required: true, min: 0, max: 255 },
+  countInStock: { type: Number, required: true, min: 0, max: 1000 },
   price: { type: Number, default: 0 },
   category: {
     type: mongoose.Schema.Types.ObjectId,
@@ -18,7 +18,7 @@ const ProductSchema: Schema = new Schema({
   rating: { type: Number, default: 0, min: 0, max: 10 },
   numReviews: { type: Number, default: 0 },
   isFeatured: { type: Boolean, default: false },
-  dateOrdered: { type: Date, default: Date.now },
+  dateOrdered: { type: Number, default: new Date().getTime() },
   id: { type: String, unique: true },
 });
 

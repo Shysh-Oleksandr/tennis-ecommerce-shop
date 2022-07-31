@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { Pressable, Text } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import SelectDropdown from "react-native-select-dropdown";
 import tw from "tailwind-react-native-classnames";
-import { v4 } from "uuid";
 import countries from "../../../../assets/countries.json";
 import { useAppSelector } from "../../../app/hooks";
 import IOrder from "../../../interfaces/order";
@@ -92,7 +90,11 @@ const Checkout = (props: Props) => {
             search={true}
             buttonStyle={tw`w-full bg-white h-16 m-3 rounded-2xl p-3 border-2 border-blue-500`}
           />
-          <Button text="Confirm" onPress={() => checkOut()} />
+          <Button
+            text="Confirm"
+            onPress={() => checkOut()}
+            className={tw`my-2`}
+          />
         </>
       </FormContainer>
     </KeyboardAwareScrollView>
