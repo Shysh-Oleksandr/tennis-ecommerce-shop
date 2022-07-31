@@ -94,6 +94,7 @@ const Products = (props: Props) => {
         }
         data={filteredProducts}
         ListHeaderComponent={getTableHeader}
+        contentContainerStyle={tw`pb-6`}
         renderItem={({ item, index }) => (
           <ProductItem
             navigation={props.navigation}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import Toast from "react-native-toast-message";
 import tw from "tailwind-react-native-classnames";
@@ -7,6 +7,7 @@ import { API_URL } from "../../../constants";
 import { clearCart } from "../../../features/cart/cartSlice";
 import IOrder from "../../../interfaces/order";
 import Button from "../../../shared/UI/Button";
+import ErrorText from "../../../shared/UI/ErrorText";
 import CartItem from "../CartItem";
 import { useAppDispatch, useAppSelector } from "./../../../app/hooks";
 import { getTotalPrice } from "./../Cart";
@@ -20,6 +21,7 @@ const Confirm = ({ route, navigation }: Props) => {
   const dispatch = useAppDispatch();
   const { user, token } = useAppSelector((store) => store.user);
   const { cartItems } = useAppSelector((store) => store.cart);
+  const [error, setError] = useState("");
   const order: IOrder | undefined = route.params
     ? route.params.order.order
     : undefined;
@@ -70,6 +72,19 @@ const Confirm = ({ route, navigation }: Props) => {
   }
 
   const confirmOrder = async () => {
+    if (
+      !order?.phone ||
+      order?.phone.toString().length < 9 ||
+      !order?.shippingAddress1 ||
+      !order?.city ||
+      !order?.country ||
+      !order?.zip
+    ) {
+      setError("Please provide all the necessary information.");
+      return;
+    } else {
+      setError("");
+    }
     createNewOrder();
   };
 
@@ -104,6 +119,13 @@ const Confirm = ({ route, navigation }: Props) => {
                   style={tw`text-lg font-medium px-8 py-3 bg-white shadow-lg`}
                 >
                   <Text style={tw`font-bold`}>City:</Text> {order.city}
+                </Text>
+              ) : null}
+              {order.phone ? (
+                <Text
+                  style={tw`text-lg font-medium px-8 py-3 bg-white shadow-lg`}
+                >
+                  <Text style={tw`font-bold`}>Phone:</Text> {order.phone}
                 </Text>
               ) : null}
               {order.zip ? (
@@ -145,6 +167,7 @@ const Confirm = ({ route, navigation }: Props) => {
               </View>
             </View>
           </View>
+          <ErrorText error={error} />
           <Button
             text="Place Order"
             onPress={() => confirmOrder()}

@@ -49,6 +49,11 @@ const ProductContainer = (props: any) => {
   }, [products]);
 
   useEffect(() => {
+    setFocus(false);
+    setActiveCategory("All");
+  }, []);
+
+  useEffect(() => {
     searchProduct(debouncedSearchValue);
   }, [debouncedSearchValue]);
 

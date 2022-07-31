@@ -8,6 +8,7 @@ import IOrder from "../../../interfaces/order";
 import FormContainer from "../../../shared/Form/FormContainer";
 import Input from "../../../shared/Form/Input";
 import Button from "../../../shared/UI/Button";
+import ErrorText from "../../../shared/UI/ErrorText";
 import { getTotalPrice } from "./../Cart";
 type Props = {
   navigation: any;
@@ -22,8 +23,14 @@ const Checkout = (props: Props) => {
   const [zip, setZip] = useState<string>("");
   const [country, setCountry] = useState<string>("");
   const [phone, setPhone] = useState<string>(user.phone || "");
+  const [error, setError] = useState("");
 
   const checkOut = () => {
+    if (!phone || phone.length < 9 || !address || !city || !country || !zip) {
+      setError("Please fill in all the fields.");
+      return;
+    }
+    setError("");
     const order: IOrder = {
       city,
       country,
@@ -91,6 +98,7 @@ const Checkout = (props: Props) => {
             search={true}
             buttonStyle={tw`w-full bg-white h-16 m-3 rounded-2xl p-3 border-2 border-blue-500`}
           />
+          <ErrorText error={error} />
           <Button
             text="Confirm"
             onPress={() => checkOut()}
