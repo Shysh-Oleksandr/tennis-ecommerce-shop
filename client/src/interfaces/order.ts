@@ -10,7 +10,7 @@ export default interface IOrder {
   phone: number;
   status?: string;
   totalPrice: number;
-  dateCreated: number;
+  dateOrdered: number;
   user?: IUser;
   orderItems: IOrderItem[];
   _id: string;

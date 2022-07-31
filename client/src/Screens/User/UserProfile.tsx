@@ -22,10 +22,6 @@ const UserProfile = ({ navigation }: Props) => {
     if (!user._id) {
       navigation.navigate("Login");
     }
-
-    // AsyncStorage.getItem('jwt').then(res => {
-    // 	axios.ge
-    // })
   }, [user._id]);
 
   const logoutUser = () => {

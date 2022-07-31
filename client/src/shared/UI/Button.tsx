@@ -12,10 +12,17 @@ type Props = {
   text: string;
   disabled?: boolean;
   className?: any;
+  textClassName?: any;
   onPress: (event: GestureResponderEvent) => void;
 };
 
-const Button = ({ text, onPress, className, disabled }: Props) => {
+const Button = ({
+  text,
+  onPress,
+  className,
+  disabled,
+  textClassName,
+}: Props) => {
   return (
     <TouchableOpacity
       disabled={disabled}
@@ -26,7 +33,9 @@ const Button = ({ text, onPress, className, disabled }: Props) => {
         className,
       ]}
     >
-      <Text style={tw`text-2xl text-white font-semibold`}>{text}</Text>
+      <Text style={[tw`text-2xl text-white font-semibold`, textClassName]}>
+        {text}
+      </Text>
     </TouchableOpacity>
   );
 };

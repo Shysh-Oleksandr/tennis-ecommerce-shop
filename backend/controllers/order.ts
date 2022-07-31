@@ -16,7 +16,6 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
     country,
     phone,
     status,
-    totalPrice,
     orderItems,
     user,
   } = req.body;
@@ -60,6 +59,7 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
     country,
     phone,
     status,
+    dateOrdered: new Date().getTime(),
     totalPrice: orderTotalPrice,
     orderItems: orderItemsIdsResolved,
     user,

@@ -13,6 +13,6 @@ export default interface IProduct {
   rating: number;
   numReviews: number;
   isFeatured: boolean;
-  dateCreated: Date;
+  dateOrdered: Date;
   _id: string;
 }

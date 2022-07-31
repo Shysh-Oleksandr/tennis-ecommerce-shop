@@ -10,7 +10,7 @@ const OrderSchema: Schema = new Schema({
   phone: { type: Number, required: true },
   status: { type: String, required: true, default: "Pending" },
   totalPrice: { type: Number },
-  dateOrdered: { type: Date, default: Date.now },
+  dateOrdered: { type: Number, default: new Date().getTime() },
   orderItems: [
     {
       type: mongoose.Schema.Types.ObjectId,

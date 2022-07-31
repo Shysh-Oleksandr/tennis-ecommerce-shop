@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Button, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -18,7 +18,7 @@ export function getTotalPrice(cartItems: IOrderItem[]): number {
   let total = 0;
 
   cartItems.forEach((item) => {
-    return (total += item.product.price);
+    return (total += item.product.price * item.quantity);
   });
   return total;
 }
@@ -26,8 +26,11 @@ export function getTotalPrice(cartItems: IOrderItem[]): number {
 const Cart = (props: Props) => {
   const { cartItems } = useAppSelector((store) => store.cart);
   const dispatch = useAppDispatch();
+  const [total, setTotal] = useState(getTotalPrice(cartItems));
 
-  const total = getTotalPrice(cartItems);
+  useEffect(() => {
+    setTotal(getTotalPrice(cartItems));
+  }, [cartItems]);
 
   const removeProduct = (item: IProduct) => {
     dispatch(removeFromCart(item._id));
@@ -70,10 +73,10 @@ const Cart = (props: Props) => {
           )}
           renderHiddenItem={(item) => {
             return (
-              <View style={tw`flex-1 justify-end flex-row `}>
+              <View style={tw`flex-1 justify-start flex-row `}>
                 <TouchableOpacity
                   activeOpacity={0.7}
-                  style={tw`bg-red-500 justify-center items-end pr-6 h-16 mt-2 w-full`}
+                  style={tw`bg-red-500 justify-center items-start pl-6 h-16 mt-2 w-full`}
                   onPress={() => removeProduct(item.item.product)}
                 >
                   <Icon name="trash" color={"white"} size={30} />
@@ -82,13 +85,13 @@ const Cart = (props: Props) => {
             );
           }}
           disableRightSwipe={true}
-          keyExtractor={(item) => item.product._id}
           previewOpenDelay={3000}
           friction={1000}
           tension={40}
-          leftOpenValue={75}
-          stopLeftSwipe={75}
-          rightOpenValue={-75}
+          leftOpenValue={-75}
+          stopLeftSwipe={-75}
+          rightOpenValue={75}
+          keyExtractor={(item) => item.product._id}
         />
       </View>
       <View
@@ -96,7 +99,7 @@ const Cart = (props: Props) => {
       >
         <View>
           <Text style={tw`text-xl font-bold`}>
-            Total: <Text style={tw`text-red-400`}>${total}</Text>
+            Total: <Text style={tw`text-red-400`}>$ {total}</Text>
           </Text>
         </View>
         <View style={tw`flex-row items-center`}>

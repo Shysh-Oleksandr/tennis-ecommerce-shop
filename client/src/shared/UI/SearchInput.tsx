@@ -18,13 +18,13 @@ const SearchInput = ({ setSearchValue, onFocus, onBlur, focus }: Props) => {
         placeholder="Search"
         onFocus={onFocus}
       />
-      {focus && (
+      {focus ? (
         <Icon
           name="close"
           style={{ position: "absolute", right: 6, top: "20%", fontSize: 25 }}
           onPress={onBlur}
         />
-      )}
+      ) : null}
     </View>
   );
 };

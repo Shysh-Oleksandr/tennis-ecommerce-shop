@@ -18,7 +18,7 @@ const ProductSchema: Schema = new Schema({
   rating: { type: Number, default: 0, min: 0, max: 10 },
   numReviews: { type: Number, default: 0 },
   isFeatured: { type: Boolean, default: false },
-  dateCreated: { type: Date, default: Date.now },
+  dateOrdered: { type: Date, default: Date.now },
   id: { type: String, unique: true },
 });
 

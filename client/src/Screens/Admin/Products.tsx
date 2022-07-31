@@ -12,8 +12,9 @@ import ProductItem from "./ProductItem";
 import Loading from "../../shared/UI/Loading";
 import SearchInput from "../../shared/UI/SearchInput";
 import useDebounce from "../../hooks/useDebounced";
+import Modal from "../../shared/UI/Modal";
 
-type Props = {};
+type Props = { navigation: any };
 
 const Products = (props: Props) => {
   const [products, productsLoading] = useFetchData<IProduct>(
@@ -26,6 +27,7 @@ const Products = (props: Props) => {
 
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchValue = useDebounce(searchValue, 500);
+  const [modal, setModal] = useState(false);
 
   const [categories, categoriesLoading] = useFetchData<ICategory>(
     "GET",
@@ -53,6 +55,10 @@ const Products = (props: Props) => {
   useEffect(() => {
     searchProduct(debouncedSearchValue);
   }, [debouncedSearchValue]);
+
+  useEffect(() => {
+    setFilteredProducts(products);
+  }, [products]);
 
   const getTableHeader = () => {
     return (
@@ -90,7 +96,8 @@ const Products = (props: Props) => {
         ListHeaderComponent={getTableHeader}
         renderItem={({ item, index }) => (
           <ProductItem
-            // className={index % 2 === 1 ? tw`bg-gray-200` : ""}
+            navigation={props.navigation}
+            className={index % 2 === 1 ? tw`bg-gray-200` : ""}
             key={item._id}
             item={item}
           />

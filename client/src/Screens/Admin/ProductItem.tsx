@@ -1,14 +1,16 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import IProduct from "./../../interfaces/product";
 import tw from "tailwind-react-native-classnames";
 import ProductImage from "../Products/ProductImage";
 
-type Props = { item: IProduct; className?: any };
+type Props = { item: IProduct; className?: any; navigation: any };
 
-const ProductItem = ({ item, className }: Props) => {
+const ProductItem = ({ item, className, navigation }: Props) => {
   return (
-    <View
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={() => navigation.navigate("Product Detail", { item: item })}
       style={[
         tw`flex-row w-full bg-white px-4 py-1 items-center shadow-lg`,
         className,
@@ -27,7 +29,7 @@ const ProductItem = ({ item, className }: Props) => {
       <Text numberOfLines={1} style={styles.itemText}>
         $ {item.price}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

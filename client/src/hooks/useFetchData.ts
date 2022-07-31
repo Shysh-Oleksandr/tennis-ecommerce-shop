@@ -5,10 +5,12 @@ import { useCallback, useState } from "react";
 export function useFetchData<T>(
   method: string = "GET",
   url: string,
-  name: string
+  name: string,
+  headers?: any,
+  condition: boolean = true
 ): [T[], boolean] {
   const [items, setItems] = useState<T[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   async function fetchData() {
     setLoading(true);
@@ -16,6 +18,7 @@ export function useFetchData<T>(
       const response = await axios({
         method: method,
         url: url,
+        headers: headers,
       });
 
       if (response.status === 200 || response.status === 304) {
@@ -26,7 +29,6 @@ export function useFetchData<T>(
         console.log("Can't get items");
       }
     } catch (error) {
-      alert(error);
       console.log("Catch: " + error);
     } finally {
       setLoading(false);
@@ -35,8 +37,8 @@ export function useFetchData<T>(
 
   useFocusEffect(
     useCallback(() => {
-      fetchData();
-    }, [])
+      if (condition) fetchData();
+    }, [url])
   );
 
   return [items, loading];

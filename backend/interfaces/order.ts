@@ -12,7 +12,7 @@ export default interface IOrder extends Document {
   phone: number;
   status: string;
   totalPrice: number;
-  dateCreated: Date;
+  dateOrdered: number;
   user: IUser;
   orderItems: IOrderItem[];
 }

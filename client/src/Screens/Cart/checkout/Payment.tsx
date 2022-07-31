@@ -55,7 +55,7 @@ const Payment = (props: Props) => {
             radioButtons={methods}
             onPress={onMethodPress}
           />
-          {selectedMethod.id === "3" && (
+          {selectedMethod.id === "3" ? (
             <SelectDropdown
               data={paymentCards}
               defaultValue={selectedCard}
@@ -73,7 +73,7 @@ const Payment = (props: Props) => {
               }}
               buttonStyle={tw`w-full mx-auto bg-white h-12 mt-5 shadow-lg rounded-md px-2 py-1`}
             />
-          )}
+          ) : null}
         </View>
       </View>
 

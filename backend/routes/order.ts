@@ -10,6 +10,6 @@ router.post("/create", controller.create);
 router.patch("/update/:orderID", controller.update);
 router.delete("/:orderID", controller.deleteOrder);
 router.get("/", controller.readAll);
-router.get("/get/userorders/:userID", controller.readUserOrders);
+router.get("/:userID", controller.readUserOrders);
 
 export = router;

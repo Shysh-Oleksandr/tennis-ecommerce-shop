@@ -14,5 +14,5 @@ export default interface IProduct extends Document {
   rating: number;
   numReviews: number;
   isFeatured: boolean;
-  dateCreated: Date;
+  dateOrdered: Date;
 }

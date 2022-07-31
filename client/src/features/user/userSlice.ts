@@ -1,12 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import IProduct from "../../interfaces/product";
-import IOrderItem from "../../interfaces/orderItem";
-import IUser from "./../../interfaces/user";
-import Toast from "react-native-toast-message";
-import axios from "axios";
-import { API_URL } from "../../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import jwt_decode from "jwt-decode";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import Toast from "react-native-toast-message";
+import { API_URL } from "../../constants";
+import IUser from "./../../interfaces/user";
 
 export const DEFAULT_USER: IUser = {
   name: "",
@@ -55,14 +52,13 @@ export const loginUser = createAsyncThunk(
           topOffset: 60,
           type: "success",
           text1: "Login succeeded",
-          text2: "Enjoy!",
         });
         setTimeout(() => {
           navigation.navigate("Home");
         }, 500);
         const token = response.data.token;
         AsyncStorage.setItem("jwt", token);
-        return { token: jwt_decode(token), user: response.data.user };
+        return { token: token, user: response.data.user };
       } else {
         setError("Invalid email or password, try again.");
         return { error: true };
