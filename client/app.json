@@ -1,7 +1,9 @@
 {
   "expo": {
-    "name": "tennis-ecommerce-shop",
-    "slug": "tennis-ecommerce-shop",
+    "name": "Tennis Shop",
+    "slug": "tennisShop",
+    "privacy": "public",
+    "description": "A fullstack MERN React Native Ecommerce mobile app for online shopping for tennis equipment",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/tennis.png",

@@ -15,6 +15,7 @@ const config = {
     server: {
         host: "localhost",
         port: process.env.PORT || 8001,
+        url: "https://ecommerce-projecto.herokuapp.com",
     },
     api_url: "/api/v1",
     jwt_secret: "whereAreTheTurtles",

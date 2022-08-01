@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
+const config_1 = __importDefault(require("../config/config"));
 const logging_1 = __importDefault(require("../config/logging"));
 const product_1 = __importDefault(require("../models/product"));
 const create = (req, res, next) => {
@@ -128,7 +129,7 @@ const updateImages = (req, res, next) => {
     }
     const files = req.files;
     let imagesPaths = [];
-    const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
+    const basePath = `${config_1.default.server.url}/public/uploads/`; //${req.protocol}://${req.get("host")}
     if (files) {
         files.map((file) => {
             imagesPaths.push(`${basePath}${file.filename}`);

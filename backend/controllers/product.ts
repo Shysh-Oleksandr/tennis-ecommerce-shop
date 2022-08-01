@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
+import config from "../config/config";
 import logging from "../config/logging";
 import Product from "../models/product";
 
@@ -152,7 +153,7 @@ const updateImages = (req: Request, res: Response, next: NextFunction) => {
 
   const files: any = req.files;
   let imagesPaths: string[] = [];
-  const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
+  const basePath = `${config.server.url}/public/uploads/`; //${req.protocol}://${req.get("host")}
 
   if (files) {
     files.map((file: any) => {
