@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "client",
-    "slug": "client",
+    "name": "tennis-ecommerce-shop",
+    "slug": "tennis-ecommerce-shop",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/tennis-favicon.png",
+    "icon": "./assets/tennis.png",
     "userInterfaceStyle": "light",
     "splash": {
       "resizeMode": "contain",
@@ -19,12 +19,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/tennis-favicon.png",
+        "foregroundImage": "./assets/tennis.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "tennis-favicon": "./assets/tennis-favicon.png"
+      "tennis-favicon": "./assets/tennis.png"
     }
   }
 }
