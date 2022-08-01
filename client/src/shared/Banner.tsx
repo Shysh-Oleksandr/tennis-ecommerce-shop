@@ -25,7 +25,7 @@ const Banner = ({ bannerImages, className }: Props) => {
       <View style={[styles.container, className]}>
         <View style={styles.swiper}>
           <Swiper
-            style={{ height: width / 2 }}
+            style={{ height: 200 }}
             showsButtons={false}
             autoplay={true}
             autoplayTimeout={5}

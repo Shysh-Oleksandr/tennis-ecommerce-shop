@@ -32,7 +32,7 @@ const Main = () => {
               name="home"
               color={color}
               style={{ position: "relative" }}
-              size={30}
+              size={26}
             />
           ),
         }}
@@ -47,7 +47,7 @@ const Main = () => {
                 name="shopping-cart"
                 color={color}
                 style={{ position: "relative" }}
-                size={30}
+                size={26}
               />
               <CartIcon />
             </View>
@@ -60,7 +60,7 @@ const Main = () => {
           component={AdminNavigator}
           options={{
             tabBarIcon: ({ color }) => (
-              <Icon name="cog" color={color} size={30} />
+              <Icon name="cog" color={color} size={26} />
             ),
           }}
         />
@@ -71,7 +71,7 @@ const Main = () => {
         component={UserNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="user" color={color} size={30} />
+            <Icon name="user" color={color} size={26} />
           ),
         }}
       />

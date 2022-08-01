@@ -55,7 +55,7 @@ const CartItem = ({ cartItem, imageClassName, isConfirm }: Props) => {
       </View>
       <View>
         <Text style={tw`text-base text-red-400 font-medium text-right`}>
-          $ {product.price}
+          $ {product.price.toFixed(2)}
         </Text>
       </View>
     </View>

@@ -5,6 +5,7 @@ import RadioGroup, { RadioButtonProps } from "react-native-radio-buttons-group";
 import SelectDropdown from "react-native-select-dropdown";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Button from "../../../shared/UI/Button";
+import IOrder from "./../../../interfaces/order";
 
 const methodsData: RadioButtonProps[] = [
   { label: "Cash on Delivery", id: "1", selected: true },
@@ -24,7 +25,7 @@ type Props = {
 };
 
 const Payment = (props: Props) => {
-  const order = props.route.params;
+  const order: IOrder = props.route.params;
 
   const [methods, setMethods] = useState(methodsData);
   const [selectedMethod, setSelectedMethod] = useState<RadioButtonProps>(
@@ -42,6 +43,9 @@ const Payment = (props: Props) => {
   };
 
   const confirmPayment = () => {
+    if (!order) {
+      return;
+    }
     props.navigation.navigate("Confirm", { order: order });
   };
 

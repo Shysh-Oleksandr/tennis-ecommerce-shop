@@ -51,8 +51,8 @@ const SingleProduct = ({ route }: Props) => {
       <ScrollView style={tw`mb-16 p-2`}>
         {item.images && item.images.length > 0 ? (
           <Banner
-            bannerImages={item.images}
-            className={{ marginBottom: -40 }}
+            bannerImages={[item.image, ...item.images]}
+            className={{ marginBottom: -20 }}
           />
         ) : (
           <ProductImage

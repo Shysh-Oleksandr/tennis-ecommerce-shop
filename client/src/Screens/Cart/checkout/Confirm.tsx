@@ -22,6 +22,7 @@ const Confirm = ({ route, navigation }: Props) => {
   const { user, token } = useAppSelector((store) => store.user);
   const { cartItems } = useAppSelector((store) => store.cart);
   const [error, setError] = useState("");
+  const [ordering, setOrdering] = useState(false);
   const order: IOrder | undefined = route.params
     ? route.params.order.order
     : undefined;
@@ -29,6 +30,7 @@ const Confirm = ({ route, navigation }: Props) => {
   const totalPrice = getTotalPrice(cartItems);
 
   async function createNewOrder() {
+    setOrdering(true);
     try {
       if (!order) throw new Error();
       const response = await axios({
@@ -40,7 +42,7 @@ const Confirm = ({ route, navigation }: Props) => {
           city: order.city,
           zip: order.zip,
           country: order.country,
-          phone: order.phone,
+          phone: Number(order.phone),
           orderItems: order.orderItems,
           user: user._id,
         },
@@ -56,6 +58,9 @@ const Confirm = ({ route, navigation }: Props) => {
         setTimeout(() => {
           dispatch(clearCart());
           navigation.navigate("Your Orders");
+          setTimeout(() => {
+            setOrdering(false);
+          }, 500);
         }, 500);
       } else {
         throw new Error();
@@ -67,6 +72,7 @@ const Confirm = ({ route, navigation }: Props) => {
         text1: "Something went wrong",
         text2: "Please, try again",
       });
+      setOrdering(false);
       console.log("Catch: " + error);
     }
   }
@@ -74,7 +80,7 @@ const Confirm = ({ route, navigation }: Props) => {
   const confirmOrder = async () => {
     if (
       !order?.phone ||
-      order?.phone.toString().length < 9 ||
+      order?.phone.toString().length < 7 ||
       !order?.shippingAddress1 ||
       !order?.city ||
       !order?.country ||
@@ -169,6 +175,7 @@ const Confirm = ({ route, navigation }: Props) => {
           </View>
           <ErrorText error={error} />
           <Button
+            disabled={ordering}
             text="Place Order"
             onPress={() => confirmOrder()}
             className={tw`my-2`}

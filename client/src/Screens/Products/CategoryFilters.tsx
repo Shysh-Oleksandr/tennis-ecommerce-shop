@@ -24,7 +24,6 @@ const CategoryFilters = ({
           marginTop: -30,
           paddingHorizontal: 10,
           backgroundColor: "#fff",
-          paddingVertical: 15,
         }}
         data={categories}
         ListHeaderComponent={

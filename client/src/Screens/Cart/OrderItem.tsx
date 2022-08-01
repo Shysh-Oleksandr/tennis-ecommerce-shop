@@ -73,58 +73,60 @@ const OrderItem = ({ order }: Props) => {
   return (
     <View style={tw`bg-white px-4 py-3 shadow-lg rounded-md my-2 mx-6`}>
       <Text style={tw`text-sm text-gray-400`}>№{order._id}</Text>
-      <View style={tw`flex-row items-center border-b-2 border-gray-100`}>
+      <View style={tw`flex-row items-center border-b-2 border-gray-100 py-1`}>
         <Text style={tw`text-base text-gray-800 mr-1`}>
           <Text style={tw`font-semibold`}>Status:</Text> {status}
         </Text>
         <CircleIndicator className={tw`${statusColor} h-5 w-5`} />
       </View>
       <Text
-        style={tw`text-base text-gray-800  w-full border-b-2 border-gray-100`}
+        style={tw`text-base text-gray-800  w-full border-b-2 border-gray-100 py-1`}
       >
         <Text style={tw`font-semibold`}>Street:</Text> {order.shippingAddress1}
       </Text>
       {order.shippingAddress2 ? (
         <Text
-          style={tw`text-base text-gray-800  w-full border-b-2 border-gray-100`}
+          style={tw`text-base text-gray-800  w-full border-b-2 border-gray-100 py-1`}
         >
           <Text style={tw`font-semibold`}>Street 2:</Text>{" "}
           {order.shippingAddress2}
         </Text>
       ) : null}
       <Text
-        style={tw`text-base text-gray-800 w-full border-b-2 border-gray-100`}
+        style={tw`text-base text-gray-800 w-full border-b-2 border-gray-100 py-1`}
       >
         <Text style={tw`font-semibold`}>City:</Text> {order.city}
       </Text>
       <Text
-        style={tw`text-base text-gray-800 w-full border-b-2 border-gray-100`}
+        style={tw`text-base text-gray-800 w-full border-b-2 border-gray-100 py-1`}
       >
         <Text style={tw`font-semibold`}>Country:</Text> {order.country}
       </Text>
       <Text
-        style={tw`text-base text-gray-800 w-full border-b-2 border-gray-100`}
+        style={tw`text-base text-gray-800 w-full border-b-2 border-gray-100 py-1`}
       >
         <Text style={tw`font-semibold`}>Zip:</Text> {order.zip}
       </Text>
       <Text
-        style={tw`text-base text-gray-800 w-full border-b-2 border-gray-100`}
+        style={tw`text-base text-gray-800 w-full border-b-2 border-gray-100 py-1`}
       >
         <Text style={tw`font-semibold`}>Phone:</Text> {order.phone}
       </Text>
       <Text
-        style={tw`text-base text-gray-800 w-full border-b-2 border-gray-100`}
+        style={tw`text-base text-gray-800 w-full border-b-2 border-gray-100 py-1`}
       >
         <Text style={tw`font-semibold`}>Date:</Text>{" "}
         {new Date(order.dateOrdered).toLocaleDateString()}
       </Text>
-      <Text style={tw`text-base font-semibold text-gray-800`}>Products:</Text>
+      <Text style={tw`text-base font-semibold text-gray-800 py-1`}>
+        Products:
+      </Text>
       <View style={[tw`items-center flex-row mb-2`, { flexWrap: "wrap" }]}>
         {order.orderItems.map((orderItem) => {
           return (
             <View
               key={orderItem.product._id}
-              style={tw`items-center justify-between flex-row w-full border-2 border-gray-200 py-1 px-2`}
+              style={tw`items-center my-1 justify-between flex-row w-full border-2 border-gray-200 py-1 px-2`}
             >
               <Text
                 numberOfLines={1}
@@ -135,7 +137,7 @@ const OrderItem = ({ order }: Props) => {
               <View style={tw`flex-row items-center`}>
                 <Text style={tw`text-base`}>x{orderItem.quantity}</Text>
                 <Text style={tw`text-base ml-2 text-red-400`}>
-                  $ {orderItem.product.price * orderItem.quantity}
+                  $ {(orderItem.product.price * orderItem.quantity).toFixed(2)}
                 </Text>
               </View>
             </View>
@@ -145,7 +147,7 @@ const OrderItem = ({ order }: Props) => {
       <View style={tw`items-center justify-between flex-row`}>
         <Button
           textClassName={tw`text-xl`}
-          text="Cancel"
+          text={isCanceled ? "Canceled" : "Cancel"}
           disabled={isCanceled || deleting}
           onPress={() => removeOrder()}
           className={tw`w-1/2 py-1 ${isCanceled ? "bg-red-900" : "bg-red-600"}`}

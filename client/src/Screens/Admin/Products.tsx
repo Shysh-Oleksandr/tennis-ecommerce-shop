@@ -82,7 +82,6 @@ const Products = (props: Props) => {
       </View>
     );
   };
-  console.log(products.length);
 
   if (productsLoading) {
     return <Loading />;

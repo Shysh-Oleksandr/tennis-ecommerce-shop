@@ -19,7 +19,7 @@ const { width } = Dimensions.get("window");
 
 const SearchedProducts = ({ filteredProducts, navigation }: Props) => {
   return (
-    <View style={{ width: width - 40, marginHorizontal: 20 }}>
+    <View style={{ width: width - 40, marginHorizontal: 20, flex: 1 }}>
       {filteredProducts.length > 0 ? (
         <>
           <FlatList

@@ -26,7 +26,7 @@ const Checkout = (props: Props) => {
   const [error, setError] = useState("");
 
   const checkOut = () => {
-    if (!phone || phone.length < 9 || !address || !city || !country || !zip) {
+    if (!phone || phone.length < 7 || !address || !city || !country || !zip) {
       setError("Please fill in all the fields.");
       return;
     }
@@ -35,7 +35,7 @@ const Checkout = (props: Props) => {
       city,
       country,
       dateOrdered: Date.now(),
-      phone: Number(phone),
+      phone: phone,
       zip,
       shippingAddress1: address,
       shippingAddress2: address2,

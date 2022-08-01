@@ -7,7 +7,7 @@ export default interface IOrder {
   city: string;
   zip: string;
   country: string;
-  phone: number;
+  phone: string;
   status?: string;
   totalPrice: number;
   dateOrdered: number;
