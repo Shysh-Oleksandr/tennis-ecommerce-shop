@@ -12,6 +12,8 @@ type Props = {
   route: any;
 };
 
+const SEPARATOR = ",AND,";
+
 enum Availability {
   Unavailable,
   Limited,
@@ -46,7 +48,7 @@ const SingleProduct = ({ route }: Props) => {
 
   return (
     <View style={tw`relative h-full`}>
-      <ScrollView style={tw`mb-20 p-2`}>
+      <ScrollView style={tw`mb-16 p-2`}>
         {item.images && item.images.length > 0 ? (
           <Banner
             bannerImages={item.images}

@@ -6,10 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const logging_1 = __importDefault(require("../config/logging"));
 const product_1 = __importDefault(require("../models/product"));
+const SEPARATOR = ",AND,";
 const create = (req, res, next) => {
     logging_1.default.info("Attempting to register product...");
     let { name, description, richDescription, brand, image, images, price, category, countInStock, rating, numReviews, isFeatured, } = req.body;
-    const SEPARATOR = ",AND,";
     const product = new product_1.default({
         _id: new mongoose_1.default.Types.ObjectId(),
         name,
@@ -96,6 +96,9 @@ const update = (req, res, next) => {
         .then((product) => {
         if (product) {
             product.set(req.body);
+            product.set({
+                images: req.body.images.split(SEPARATOR),
+            });
             product
                 .save()
                 .then((newProduct) => {

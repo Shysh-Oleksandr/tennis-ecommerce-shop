@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import logging from "../config/logging";
 import Product from "../models/product";
+const SEPARATOR = ",AND,";
 
 const create = (req: Request, res: Response, next: NextFunction) => {
   logging.info("Attempting to register product...");
@@ -20,8 +21,6 @@ const create = (req: Request, res: Response, next: NextFunction) => {
     numReviews,
     isFeatured,
   } = req.body;
-
-  const SEPARATOR = ",AND,";
 
   const product = new Product({
     _id: new mongoose.Types.ObjectId(),
@@ -120,6 +119,9 @@ const update = (req: Request, res: Response, next: NextFunction) => {
     .then((product) => {
       if (product) {
         product.set(req.body);
+        product.set({
+          images: req.body.images.split(SEPARATOR),
+        });
 
         product
           .save()
