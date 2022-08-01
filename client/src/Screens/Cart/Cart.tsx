@@ -117,14 +117,14 @@ const Cart = (props: Props) => {
             {user._id === "" ? (
               <Button
                 text="Login"
-                className={tw`py-1 bg-blue-800`}
+                className={tw`py-1 bg-blue-800 px-2`}
                 textClassName={tw`text-lg`}
-                onPress={() => props.navigation.navigate("Login")}
+                onPress={() => props.navigation.navigate("User")}
               />
             ) : (
               <Button
                 text="Checkout"
-                className={tw`py-1 bg-blue-800`}
+                className={tw`py-1 bg-blue-800 px-2`}
                 textClassName={tw`text-lg`}
                 onPress={() => props.navigation.navigate("Checkout")}
               />

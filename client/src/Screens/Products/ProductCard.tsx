@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   card: {
     marginBottom: 10,
-    height: width / 2 - 20 - 90,
+    height: 100,
     backgroundColor: "transparent",
     width: width / 2 - 20 - 10,
   },
