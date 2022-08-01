@@ -4,24 +4,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const config_1 = __importDefault(require("../config/config"));
 const logging_1 = __importDefault(require("../config/logging"));
 const product_1 = __importDefault(require("../models/product"));
 const create = (req, res, next) => {
-    var _a;
     logging_1.default.info("Attempting to register product...");
-    const file = req.file;
-    if (!file)
-        return res.status(400).send("No image in the request");
-    const fileName = (_a = req.file) === null || _a === void 0 ? void 0 : _a.filename;
-    const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
-    let { name, description, richDescription, brand, price, category, countInStock, rating, numReviews, isFeatured, } = req.body;
+    let { name, description, richDescription, brand, image, images, price, category, countInStock, rating, numReviews, isFeatured, } = req.body;
+    const SEPARATOR = ",AND,";
     const product = new product_1.default({
         _id: new mongoose_1.default.Types.ObjectId(),
         name,
         description,
         richDescription,
-        image: `${basePath}${fileName}` || "",
+        image: image,
+        images: images.split(SEPARATOR),
         brand,
         price,
         category,
@@ -129,7 +124,7 @@ const updateImages = (req, res, next) => {
     }
     const files = req.files;
     let imagesPaths = [];
-    const basePath = `${config_1.default.server.url}/public/uploads/`; //${req.protocol}://${req.get("host")}
+    const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
     if (files) {
         files.map((file) => {
             imagesPaths.push(`${basePath}${file.filename}`);

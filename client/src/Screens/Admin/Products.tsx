@@ -13,6 +13,7 @@ import Loading from "../../shared/UI/Loading";
 import SearchInput from "../../shared/UI/SearchInput";
 import useDebounce from "../../hooks/useDebounced";
 import Modal from "../../shared/UI/Modal";
+import Button from "../../shared/UI/Button";
 
 type Props = { navigation: any };
 
@@ -63,7 +64,7 @@ const Products = (props: Props) => {
   const getTableHeader = () => {
     return (
       <View
-        style={tw`flex-row w-full flex-1 bg-gray-200 px-4 py-2 items-center shadow-lg`}
+        style={tw`flex-row z-10 w-full bg-gray-200 px-4 py-2 items-center shadow-lg`}
       >
         <Text numberOfLines={1} style={tw`text-base w-12 font-bold`}></Text>
         <Text numberOfLines={1} style={tw`text-base w-1/5 mr-3 px-1 font-bold`}>
@@ -81,12 +82,19 @@ const Products = (props: Props) => {
       </View>
     );
   };
+  console.log(products.length);
 
   if (productsLoading) {
     return <Loading />;
   }
   return (
-    <View>
+    <View style={tw`h-full`}>
+      <Button
+        text="Add product"
+        className={tw`mr-4 ml-auto w-2/5 my-2 py-1`}
+        textClassName={tw`text-xl`}
+        onPress={() => props.navigation.navigate("Product Form")}
+      />
       <SearchInput setSearchValue={setSearchValue} />
       <FlatList
         ListEmptyComponent={
@@ -94,7 +102,6 @@ const Products = (props: Props) => {
         }
         data={filteredProducts}
         ListHeaderComponent={getTableHeader}
-        contentContainerStyle={tw`pb-6`}
         renderItem={({ item, index }) => (
           <ProductItem
             navigation={props.navigation}

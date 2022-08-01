@@ -1,23 +1,18 @@
 import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
-import config from "../config/config";
 import logging from "../config/logging";
 import Product from "../models/product";
 
 const create = (req: Request, res: Response, next: NextFunction) => {
   logging.info("Attempting to register product...");
 
-  const file = req.file;
-
-  if (!file) return res.status(400).send("No image in the request");
-  const fileName = req.file?.filename;
-  const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
-
   let {
     name,
     description,
     richDescription,
     brand,
+    image,
+    images,
     price,
     category,
     countInStock,
@@ -26,12 +21,15 @@ const create = (req: Request, res: Response, next: NextFunction) => {
     isFeatured,
   } = req.body;
 
+  const SEPARATOR = ",AND,";
+
   const product = new Product({
     _id: new mongoose.Types.ObjectId(),
     name,
     description,
     richDescription,
-    image: `${basePath}${fileName}` || "",
+    image: image,
+    images: images.split(SEPARATOR),
     brand,
     price,
     category,
@@ -153,7 +151,7 @@ const updateImages = (req: Request, res: Response, next: NextFunction) => {
 
   const files: any = req.files;
   let imagesPaths: string[] = [];
-  const basePath = `${config.server.url}/public/uploads/`; //${req.protocol}://${req.get("host")}
+  const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
 
   if (files) {
     files.map((file: any) => {

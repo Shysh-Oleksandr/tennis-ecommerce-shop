@@ -11,6 +11,7 @@ import tw from "tailwind-react-native-classnames";
 
 type Props = {
   placeholder?: string;
+  className?: any;
   value?: string;
   secureTextEntry?: boolean;
   keyboardType?: KeyboardTypeOptions;
@@ -22,7 +23,10 @@ type Props = {
 const Input = (props: Props) => {
   return (
     <TextInput
-      style={tw`w-full bg-white h-16 my-3 shadow-md text-xl rounded-2xl p-3 border-2 border-blue-500`}
+      style={[
+        tw`w-full bg-white h-16 my-3 shadow-md text-xl rounded-2xl p-3 border-2 border-blue-500`,
+        props.className,
+      ]}
       placeholder={props.placeholder}
       value={props.value}
       secureTextEntry={props.secureTextEntry}
