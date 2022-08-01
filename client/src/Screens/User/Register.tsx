@@ -77,7 +77,7 @@ const Register = (props: Props) => {
       setError("Password must contain at least 6 characters.");
       return;
     }
-    if (phone.length < 10) {
+    if (phone.length < 7) {
       setError("Invalid phone number.");
       return;
     }

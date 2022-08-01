@@ -1,7 +1,5 @@
 import React from "react";
-import { Button, Dimensions, StyleSheet, Text, View } from "react-native";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { addToCart } from "../../features/cart/cartSlice";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import IProduct from "../../interfaces/product";
 import AddProductBtn from "./AddProductBtn";
 import ProductImage from "./ProductImage";
@@ -17,10 +15,8 @@ const ProductCard = ({ item }: Props) => {
     <View style={styles.container}>
       <ProductImage image={item.image} styles={styles.image} />
       <View style={styles.card} />
-      <Text style={styles.title}>
-        {item.name.length > 15
-          ? item.name.substring(0, 15 - 3) + "..."
-          : item.name}
+      <Text style={styles.title} numberOfLines={1}>
+        {item.name}
       </Text>
       <Text style={styles.price}>$ {item.price}</Text>
 
@@ -40,8 +36,9 @@ export default ProductCard;
 const styles = StyleSheet.create({
   container: {
     width: width / 2 - 20,
-    height: width / 1.7,
-    padding: 10,
+    height: 240,
+    paddingVertical: 10,
+    paddingHorizontal: 5,
     borderRadius: 10,
     marginTop: 20,
     marginBottom: 20,
@@ -66,7 +63,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
-    fontSize: 14,
+    fontSize: 16,
     textAlign: "center",
   },
   price: {
